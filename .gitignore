@@ -1,0 +1,16 @@
+# local working notes, never published
+STATUS.md
+
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.idea/
+.vscode/
+*.egg-info/
+build/
+dist/
+.DS_Store

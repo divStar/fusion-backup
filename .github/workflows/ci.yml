@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e . --group dev
+
+      - name: Formatting (ruff format)
+        run: ruff format --check .
+
+      - name: Lint (ruff)
+        run: ruff check --output-format=github .
+
+      - name: Types (mypy)
+        run: mypy
+
+      - name: Module boundaries (import-linter)
+        run: lint-imports
+
+      - name: Tests and coverage (pytest)
+        run: pytest --cov-report=markdown-append:"$GITHUB_STEP_SUMMARY"

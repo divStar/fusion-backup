@@ -1,0 +1,94 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fusion-backup"
+dynamic = ["version"]
+description = "Back up Autodesk Fusion designs (.f3d and STEP) from the Autodesk cloud into git repositories"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.14"
+dependencies = [
+    "authlib>=1.9",
+    "httpx2>=2.13",
+    "joserfc>=1.7",
+    "pydantic>=2.14",
+    "typer>=0.27",
+]
+
+[project.scripts]
+fusion-backup = "fusion_backup.cli:app"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1",
+    "pytest-cov>=7",
+    "ruff>=0.17",
+    "mypy>=2.4",
+    "import-linter>=2.15",
+]
+
+[tool.hatch.version]
+path = "src/fusion_backup/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fusion_backup"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tests"]
+addopts = ["--cov", "--cov-report=term-missing"]
+
+[tool.coverage.run]
+source = ["fusion_backup"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 90
+skip_covered = true
+exclude_also = ["\\.\\.\\.$", "if __name__ == .__main__.:"]
+
+[tool.ruff]
+line-length = 140
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "UP", "SIM", "N", "RUF", "PL"]
+ignore = [
+    "PLR0913",  # constructors with injectable collaborators legitimately take many arguments
+    "PLR2004",  # magic values in comparisons are fine for HTTP statuses and tests
+]
+
+[tool.ruff.lint.per-file-ignores]
+"src/fusion_backup/cli.py" = ["PLR0917"]  # Typer turns command parameters into options, so commands take many
+"tests/**" = ["PLR0915"]
+
+[tool.mypy]
+strict = true
+plugins = ["pydantic.mypy"]
+files = ["src", "tests"]
+mypy_path = "stubs:tests"  # stubs/: type stubs for the parts of Authlib we use, as Authlib ships none
+
+# Module boundaries, checked by `lint-imports` (like ArchUnit or Gradle module dependencies):
+# the CLI wires everything together; the backup logic only knows the cloud API, never the Autodesk
+# implementation, and the Autodesk implementation knows nothing of the backup.
+[tool.importlinter]
+root_package = "fusion_backup"
+
+[[tool.importlinter.contracts]]
+name = "Layers: cli > backup | aps > cloud"
+type = "layers"
+layers = [
+    "fusion_backup.cli",
+    "fusion_backup.backup | fusion_backup.aps",
+    "fusion_backup.cloud",
+]
+
+[[tool.importlinter.contracts]]
+name = "Autodesk DTOs stay inside the aps package"
+type = "forbidden"
+allow_indirect_imports = true  # using the aps package is fine; importing its DTOs directly is not
+source_modules = ["fusion_backup.cli", "fusion_backup.backup", "fusion_backup.cloud"]
+forbidden_modules = ["fusion_backup.aps._dto"]
