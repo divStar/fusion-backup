@@ -60,7 +60,7 @@ class TargetConfig(BaseModel):
     hub: str
     project: str
     items: dict[str, ItemMapping] = {}
-    ignore: list[str] = []
+    ignore: list[str] = []  # item names or wildcard patterns (* and ?); an explicit entry in `items` always wins
     mirror: Mirror | None = None
 
 

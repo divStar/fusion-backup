@@ -129,7 +129,7 @@ To decide where each item goes, put a `.fusion-backup.json` into the target dire
     "Parts/Screw M3x6": { "f3d": "cad/parts/Screw M3x6.f3d" },
     "Display drawing.pdf": { "file": "drawings/Display drawing.pdf" }
   },
-  "ignore": ["Old experiment"],
+  "ignore": ["Old experiment", "Imported *"],
   "mirror": { "directory": "fusion", "step": true }
 }
 ```
@@ -137,7 +137,7 @@ To decide where each item goes, put a `.fusion-backup.json` into the target dire
 * **`items`** maps item names, as shown in Fusion, to paths in the repository. Items in Fusion folders are prefixed with the folder path (`Parts/Screw M3x6`); uploaded files keep their extension in the name.
   * `f3d` and the optional `step` map a design.
   * `file` maps anything else.
-* **`ignore`** lists items that should not be backed up.
+* **`ignore`** lists items that should not be backed up, by name or with `*` and `?` as wildcards. An item listed in `items` is always backed up, even if an `ignore` entry matches it, so `"ignore": ["*"]` backs up exactly the listed items and stays silent about everything else in the project.
 * **`mirror`** (optional) sends every other item into `directory`, keeping Fusion's folders. Without it, unlisted items are only reported as unmapped.
 
 Paths must stay inside the repository and may not point into `.git` or at the tool's own two files; two items (or a design's `.f3d` and `.step`) writing the same file, also differing only in upper/lower case, are rejected.
