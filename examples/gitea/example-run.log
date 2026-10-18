@@ -1,0 +1,465 @@
+# The complete log of a real first run of examples/gitea/fusion-backup.yml in a self-hosted Gitea (act_runner v0.6.1).
+# Anonymised: repository, host, folders and design names are replaced; everything else is unchanged. Because the
+# names were replaced afterwards, the items no longer appear in alphabetical order, as fusion-backup prints them.
+# The repository already held older, hand-exported copies of most files, hence "Bin old -> new" in the commit.
+
+2026-10-18T20:48:43.1644286Z docker-runner(version:v0.6.1) received task 3 of job backup, be triggered by event: workflow_dispatch
+2026-10-18T20:48:43.1650083Z workflow prepared
+2026-10-18T20:48:43.1651539Z evaluating expression 'always()'
+2026-10-18T20:48:43.1652974Z expression 'always()' evaluated to 'true'
+2026-10-18T20:48:43.1653273Z 🚀  Start image=docker.gitea.com/runner-images:ubuntu-latest
+2026-10-18T20:48:43.1781230Z   🐳  docker pull image=docker.gitea.com/runner-images:ubuntu-latest platform= username= forcePull=false
+2026-10-18T20:48:43.1781543Z   🐳  docker pull docker.gitea.com/runner-images:ubuntu-latest
+2026-10-18T20:48:43.1801782Z Image exists? true
+2026-10-18T20:48:43.1896026Z   🐳  docker create image=docker.gitea.com/runner-images:ubuntu-latest platform= entrypoint=["/bin/sleep" "10800"] cmd=[] network="service-network"
+2026-10-18T20:48:43.2101377Z Custom container.Config from options ==> &{Hostname: Domainname: User: AttachStdin:false AttachStdout:true AttachStderr:true ExposedPorts:map[] Tty:false OpenStdin:false StdinOnce:false Env:[] Cmd:[] Healthcheck:<nil> ArgsEscaped:false Image: Volumes:map[] WorkingDir: Entrypoint:[] NetworkDisabled:false MacAddress: OnBuild:[] Labels:map[] StopSignal: StopTimeout:<nil> Shell:[]}
+2026-10-18T20:48:43.2102146Z Merged container.Config ==> &{Hostname: Domainname: User: AttachStdin:false AttachStdout:true AttachStderr:true ExposedPorts:map[] Tty:false OpenStdin:false StdinOnce:false Env:[RUNNER_TOOL_CACHE=/opt/hostedtoolcache RUNNER_OS=Linux RUNNER_ARCH=X64 RUNNER_TEMP=/tmp LANG=C.UTF-8] Cmd:[] Healthcheck:<nil> ArgsEscaped:false Image:docker.gitea.com/runner-images:ubuntu-latest Volumes:map[] WorkingDir:/workspace/example-org/my-cad-repo Entrypoint:[/bin/sleep 10800] NetworkDisabled:false MacAddress: OnBuild:[] Labels:map[] StopSignal: StopTimeout:<nil> Shell:[]}
+2026-10-18T20:48:43.2102791Z Custom container.HostConfig from options ==> &{Binds:[/etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro] ContainerIDFile: LogConfig:{Type: Config:map[]} NetworkMode:service-network PortBindings:map[] RestartPolicy:{Name:no MaximumRetryCount:0} AutoRemove:false VolumeDriver: VolumesFrom:[] ConsoleSize:[0 0] Annotations:map[] CapAdd:[] CapDrop:[] CgroupnsMode: DNS:[] DNSOptions:[] DNSSearch:[] ExtraHosts:[] GroupAdd:[] IpcMode: Cgroup: Links:[] OomScoreAdj:0 PidMode: Privileged:false PublishAllPorts:false ReadonlyRootfs:false SecurityOpt:[] StorageOpt:map[] Tmpfs:map[] UTSMode: UsernsMode: ShmSize:0 Sysctls:map[] Runtime: Isolation: Resources:{CPUShares:0 Memory:0 NanoCPUs:0 CgroupParent: BlkioWeight:0 BlkioWeightDevice:[] BlkioDeviceReadBps:[] BlkioDeviceWriteBps:[] BlkioDeviceReadIOps:[] BlkioDeviceWriteIOps:[] CPUPeriod:0 CPUQuota:0 CPURealtimePeriod:0 CPURealtimeRuntime:0 CpusetCpus: CpusetMems: Devices:[] DeviceCgroupRules:[] DeviceRequests:[] KernelMemory:0 KernelMemoryTCP:0 MemoryReservation:0 MemorySwap:0 MemorySwappiness:0x32f7ff42aa48 OomKillDisable:0x32f7ff42a943 PidsLimit:0x32f7ff42aaa8 Ulimits:[] CPUCount:0 CPUPercent:0 IOMaximumIOps:0 IOMaximumBandwidth:0} Mounts:[] MaskedPaths:[] ReadonlyPaths:[] Init:<nil>}
+2026-10-18T20:48:43.2103583Z --network and --net in the options will be ignored.
+2026-10-18T20:48:43.2104008Z Merged container.HostConfig ==> &{Binds:[/etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro] ContainerIDFile: LogConfig:{Type: Config:map[]} NetworkMode:service-network PortBindings:map[] RestartPolicy:{Name:no MaximumRetryCount:0} AutoRemove:true VolumeDriver: VolumesFrom:[] ConsoleSize:[0 0] Annotations:map[] CapAdd:[] CapDrop:[] CgroupnsMode: DNS:[] DNSOptions:[] DNSSearch:[] ExtraHosts:[] GroupAdd:[] IpcMode: Cgroup: Links:[] OomScoreAdj:0 PidMode: Privileged:true PublishAllPorts:false ReadonlyRootfs:false SecurityOpt:[] StorageOpt:map[] Tmpfs:map[] UTSMode: UsernsMode: ShmSize:0 Sysctls:map[] Runtime: Isolation: Resources:{CPUShares:0 Memory:0 NanoCPUs:0 CgroupParent: BlkioWeight:0 BlkioWeightDevice:[] BlkioDeviceReadBps:[] BlkioDeviceWriteBps:[] BlkioDeviceReadIOps:[] BlkioDeviceWriteIOps:[] CPUPeriod:0 CPUQuota:0 CPURealtimePeriod:0 CPURealtimeRuntime:0 CpusetCpus: CpusetMems: Devices:[] DeviceCgroupRules:[] DeviceRequests:[] KernelMemory:0 KernelMemoryTCP:0 MemoryReservation:0 MemorySwap:0 MemorySwappiness:0x32f7ff42aa48 OomKillDisable:0x32f7ff42a943 PidsLimit:0x32f7ff42aaa8 Ulimits:[] CPUCount:0 CPUPercent:0 IOMaximumIOps:0 IOMaximumBandwidth:0} Mounts:[{Type:volume Source:act-toolcache Target:/opt/hostedtoolcache ReadOnly:false Consistency: BindOptions:<nil> VolumeOptions:<nil> TmpfsOptions:<nil> ClusterOptions:<nil>} {Type:volume Source:GITEA-ACTIONS-TASK-3-WORKFLOW-Fusion-backup-JOB-backup-6cca6e67ae13566b951c518501b4f2be64a997d2ac203bc403d43ee786eef6d4-env Target:/var/run/act ReadOnly:false Consistency: BindOptions:<nil> VolumeOptions:<nil> TmpfsOptions:<nil> ClusterOptions:<nil>} {Type:volume Source:GITEA-ACTIONS-TASK-3-WORKFLOW-Fusion-backup-JOB-backup-6cca6e67ae13566b951c518501b4f2be64a997d2ac203bc403d43ee786eef6d4 Target:/workspace/example-org/my-cad-repo ReadOnly:false Consistency: BindOptions:<nil> VolumeOptions:<nil> TmpfsOptions:<nil> ClusterOptions:<nil>}] MaskedPaths:[] ReadonlyPaths:[] Init:<nil>}
+2026-10-18T20:48:43.3516341Z Created container name=GITEA-ACTIONS-TASK-3-WORKFLOW-Fusion-backup-JOB-backup-6cca6e67ae13566b951c518501b4f2be64a997d2ac203bc403d43ee786eef6d4 id=b7677c30dcffdde4af5f03aaf7fa0d76a5d2b1be2c9365bdc587f947259cfcfe from image docker.gitea.com/runner-images:ubuntu-latest (platform: )
+2026-10-18T20:48:43.3517391Z ENV ==> [RUNNER_TOOL_CACHE=/opt/hostedtoolcache RUNNER_OS=Linux RUNNER_ARCH=X64 RUNNER_TEMP=/tmp LANG=C.UTF-8]
+2026-10-18T20:48:43.3517592Z   🐳  docker run image=docker.gitea.com/runner-images:ubuntu-latest platform= entrypoint=["/bin/sleep" "10800"] cmd=[] network="service-network"
+2026-10-18T20:48:43.3518491Z Starting container: b7677c30dcffdde4af5f03aaf7fa0d76a5d2b1be2c9365bdc587f947259cfcfe
+2026-10-18T20:48:43.6288988Z Started container: b7677c30dcffdde4af5f03aaf7fa0d76a5d2b1be2c9365bdc587f947259cfcfe
+2026-10-18T20:48:43.7050138Z Writing entry to tarball workflow/event.json len:3302
+2026-10-18T20:48:43.7050868Z Writing entry to tarball workflow/envs.txt len:0
+2026-10-18T20:48:43.7051078Z Extracting content to '/var/run/act/'
+2026-10-18T20:48:43.7872217Z   ☁  git clone 'https://github.com/actions/checkout' # ref=v5
+2026-10-18T20:48:43.7873111Z   cloning https://github.com/actions/checkout to /root/.cache/act/4f2b73f02470fcce346e867a2347cf2272d798014969991b71875b2592508807
+2026-10-18T20:48:44.6053848Z Unable to pull refs/heads/v5: non-fast-forward update
+2026-10-18T20:48:44.6054606Z Cloned https://github.com/actions/checkout to /root/.cache/act/4f2b73f02470fcce346e867a2347cf2272d798014969991b71875b2592508807
+2026-10-18T20:48:44.6186146Z Checked out v5
+2026-10-18T20:48:44.6325116Z   ☁  git clone 'https://github.com/actions/setup-python' # ref=v6
+2026-10-18T20:48:44.6325508Z   cloning https://github.com/actions/setup-python to /root/.cache/act/0bca5aae813b99e4ba4d537615b05d4ed693b584800702db110fd915a7cbdbb5
+2026-10-18T20:48:45.2766671Z Unable to pull refs/heads/v6: worktree contains unstaged changes
+2026-10-18T20:48:45.2768597Z Cloned https://github.com/actions/setup-python to /root/.cache/act/0bca5aae813b99e4ba4d537615b05d4ed693b584800702db110fd915a7cbdbb5
+2026-10-18T20:48:45.2923715Z Checked out v6
+2026-10-18T20:48:45.3302925Z evaluating expression ''
+2026-10-18T20:48:45.3304224Z expression '' evaluated to 'true'
+2026-10-18T20:48:45.3304409Z ⭐ Run Main actions/checkout@v5
+2026-10-18T20:48:45.3304753Z Writing entry to tarball workflow/outputcmd.txt len:0
+2026-10-18T20:48:45.3304974Z Writing entry to tarball workflow/statecmd.txt len:0
+2026-10-18T20:48:45.3305162Z Writing entry to tarball workflow/pathcmd.txt len:0
+2026-10-18T20:48:45.3305342Z Writing entry to tarball workflow/envs.txt len:0
+2026-10-18T20:48:45.3305469Z Writing entry to tarball workflow/SUMMARY.md len:0
+2026-10-18T20:48:45.3305658Z Extracting content to '/var/run/act'
+2026-10-18T20:48:45.3993762Z ::group::Run actions/checkout@v5
+2026-10-18T20:48:46.2191000Z ::add-matcher::/run/act/actions/4f2b73f02470fcce346e867a2347cf2272d798014969991b71875b2592508807/dist/problem-matcher.json
+2026-10-18T20:48:46.2196635Z Syncing repository: example-org/my-cad-repo
+2026-10-18T20:48:46.2202796Z ::group::Getting Git version info
+2026-10-18T20:48:46.2203171Z Working directory is '/workspace/example-org/my-cad-repo'
+2026-10-18T20:48:46.2258046Z [command]/usr/bin/git version
+2026-10-18T20:48:46.2328508Z git version 2.55.0
+2026-10-18T20:48:46.2362668Z ::endgroup::
+2026-10-18T20:48:46.2389686Z Temporarily overriding HOME='/tmp/aa8d2fa3-cf7d-4f24-8bef-fcaa89336963' before making global git config changes
+2026-10-18T20:48:46.2390307Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-18T20:48:46.2397539Z [command]/usr/bin/git config --global --add safe.directory /workspace/example-org/my-cad-repo
+2026-10-18T20:48:46.2461730Z Deleting the contents of '/workspace/example-org/my-cad-repo'
+2026-10-18T20:48:46.2469553Z ::group::Initializing the repository
+2026-10-18T20:48:46.2475558Z [command]/usr/bin/git init /workspace/example-org/my-cad-repo
+2026-10-18T20:48:46.2570163Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-18T20:48:46.2570979Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-18T20:48:46.2571167Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-18T20:48:46.2571296Z hint: call:
+2026-10-18T20:48:46.2571417Z hint:
+2026-10-18T20:48:46.2571588Z hint: 	git config --global init.defaultBranch <name>
+2026-10-18T20:48:46.2571775Z hint:
+2026-10-18T20:48:46.2571979Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-18T20:48:46.2572285Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-18T20:48:46.2572479Z hint:
+2026-10-18T20:48:46.2572614Z hint: 	git branch -m <name>
+2026-10-18T20:48:46.2572756Z hint:
+2026-10-18T20:48:46.2572858Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-18T20:48:46.2573162Z Initialized empty Git repository in /workspace/example-org/my-cad-repo/.git/
+2026-10-18T20:48:46.2590293Z [command]/usr/bin/git remote add origin https://gitea.example.com/example-org/my-cad-repo
+2026-10-18T20:48:46.2690052Z ::endgroup::
+2026-10-18T20:48:46.2690388Z ::group::Disabling automatic garbage collection
+2026-10-18T20:48:46.2697174Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-18T20:48:46.2754909Z ::endgroup::
+2026-10-18T20:48:46.2755166Z ::group::Setting up auth
+2026-10-18T20:48:46.2766629Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-18T20:48:46.2838013Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-18T20:48:46.3366519Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/gitea\.example\.com\/\.extraheader
+2026-10-18T20:48:46.3422735Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/gitea\.example\.com\/\.extraheader' && git config --local --unset-all 'http.https://gitea.example.com/.extraheader' || :"
+2026-10-18T20:48:46.3933491Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-18T20:48:46.3993147Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-18T20:48:46.4512565Z [command]/usr/bin/git config --local http.https://gitea.example.com/.extraheader AUTHORIZATION: basic ***
+2026-10-18T20:48:46.4585475Z ::endgroup::
+2026-10-18T20:48:46.4586026Z ::group::Fetching the repository
+2026-10-18T20:48:46.4599381Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +6fe3abad8a26758e52d05194624b462964671795:refs/remotes/origin/master
+2026-10-18T20:48:49.9046904Z From https://gitea.example.com/example-org/my-cad-repo
+2026-10-18T20:48:49.9048033Z  * [new ref]         6fe3abad8a26758e52d05194624b462964671795 -> origin/master
+2026-10-18T20:48:49.9061404Z ::endgroup::
+2026-10-18T20:48:49.9061764Z ::group::Determining the checkout info
+2026-10-18T20:48:49.9063479Z ::endgroup::
+2026-10-18T20:48:49.9073863Z [command]/usr/bin/git sparse-checkout disable
+2026-10-18T20:48:49.9165709Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-18T20:48:49.9230415Z ::group::Checking out the ref
+2026-10-18T20:48:49.9238713Z [command]/usr/bin/git checkout --progress --force -B master refs/remotes/origin/master
+2026-10-18T20:48:50.8177546Z Reset branch 'master'
+2026-10-18T20:48:50.8180660Z branch 'master' set up to track 'origin/master'.
+2026-10-18T20:48:50.8272447Z ::endgroup::
+2026-10-18T20:48:50.8358596Z [command]/usr/bin/git log -1 --format=%H
+2026-10-18T20:48:50.8408159Z 6fe3abad8a26758e52d05194624b462964671795
+2026-10-18T20:48:50.8430385Z ::remove-matcher owner=checkout-git::
+2026-10-18T20:48:50.8607074Z ::endgroup::
+2026-10-18T20:48:51.3509712Z ::group::Run actions/setup-python@v6
+2026-10-18T20:48:51.3510333Z with:
+2026-10-18T20:48:51.3510575Z   python-version: 3.14
+2026-10-18T20:48:52.3539949Z ::group::Installed versions
+2026-10-18T20:48:52.3624658Z Successfully set up CPython (3.14.8)
+2026-10-18T20:48:52.3625387Z ::endgroup::
+2026-10-18T20:48:52.3626223Z ##[add-matcher]/run/act/actions/0bca5aae813b99e4ba4d537615b05d4ed693b584800702db110fd915a7cbdbb5/.github/python.json
+2026-10-18T20:48:52.3771235Z ::endgroup::
+2026-10-18T20:48:53.0692006Z ::group::Run pip install "git+https://github.com/divStar/fusion-backup"
+2026-10-18T20:48:53.0692546Z pip install "git+https://github.com/divStar/fusion-backup"
+2026-10-18T20:48:53.0692705Z shell: bash --noprofile --norc -e -o pipefail {0}
+2026-10-18T20:48:53.0692916Z ::endgroup::
+2026-10-18T20:48:53.8234893Z Collecting git+https://github.com/divStar/fusion-backup
+2026-10-18T20:48:53.8244493Z   Cloning https://github.com/divStar/fusion-backup to /tmp/pip-req-build-y5mya7wp
+2026-10-18T20:48:53.8281715Z   Running command git clone --filter=blob:none --quiet https://github.com/divStar/fusion-backup /tmp/pip-req-build-y5mya7wp
+2026-10-18T20:48:54.8928207Z   Resolved https://github.com/divStar/fusion-backup to commit cd1067351cc513fad3f5afff08b38c5637dba85a
+2026-10-18T20:48:54.9006692Z   Installing build dependencies: started
+2026-10-18T20:48:56.4371006Z   Installing build dependencies: finished with status 'done'
+2026-10-18T20:48:56.4382034Z   Getting requirements to build wheel: started
+2026-10-18T20:48:56.7736681Z   Getting requirements to build wheel: finished with status 'done'
+2026-10-18T20:48:56.7755190Z   Preparing metadata (pyproject.toml): started
+2026-10-18T20:48:57.1476951Z   Preparing metadata (pyproject.toml): finished with status 'done'
+2026-10-18T20:48:57.1539557Z Requirement already satisfied: authlib>=1.9 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from fusion-backup==0.1.1) (1.9.1)
+2026-10-18T20:48:57.1550332Z Requirement already satisfied: httpx2>=2.13 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from fusion-backup==0.1.1) (2.14.0)
+2026-10-18T20:48:57.1563732Z Requirement already satisfied: joserfc>=1.7 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from fusion-backup==0.1.1) (1.7.5)
+2026-10-18T20:48:57.1572083Z Requirement already satisfied: pydantic>=2.14 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from fusion-backup==0.1.1) (2.14.1)
+2026-10-18T20:48:57.1579558Z Requirement already satisfied: typer>=0.27 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from fusion-backup==0.1.1) (0.27.3)
+2026-10-18T20:48:57.1597001Z Requirement already satisfied: cryptography>=45.0.1 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from authlib>=1.9->fusion-backup==0.1.1) (50.0.2)
+2026-10-18T20:48:57.1622244Z Requirement already satisfied: cffi>=2.0.0 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from cryptography>=45.0.1->authlib>=1.9->fusion-backup==0.1.1) (2.1.1)
+2026-10-18T20:48:57.1645645Z Requirement already satisfied: pycparser in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from cffi>=2.0.0->cryptography>=45.0.1->authlib>=1.9->fusion-backup==0.1.1) (3.11)
+2026-10-18T20:48:57.1668713Z Requirement already satisfied: anyio>=4.10 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from httpx2>=2.13->fusion-backup==0.1.1) (4.15.1)
+2026-10-18T20:48:57.1684546Z Requirement already satisfied: httpcore2==2.14.0 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from httpx2>=2.13->fusion-backup==0.1.1) (2.14.0)
+2026-10-18T20:48:57.1693791Z Requirement already satisfied: idna>=3.18 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from httpx2>=2.13->fusion-backup==0.1.1) (3.20)
+2026-10-18T20:48:57.1705974Z Requirement already satisfied: truststore>=0.10 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from httpx2>=2.13->fusion-backup==0.1.1) (0.10.5)
+2026-10-18T20:48:57.1743239Z Requirement already satisfied: h11>=0.16 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from httpcore2==2.14.0->httpx2>=2.13->fusion-backup==0.1.1) (0.16.0)
+2026-10-18T20:48:57.1768470Z Requirement already satisfied: typing_extensions>=4.16.0 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from anyio>=4.10->httpx2>=2.13->fusion-backup==0.1.1) (4.16.0)
+2026-10-18T20:48:57.1850935Z Requirement already satisfied: annotated-types>=0.6.0 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from pydantic>=2.14->fusion-backup==0.1.1) (0.8.0)
+2026-10-18T20:48:57.1857324Z Requirement already satisfied: pydantic-core==2.50.1 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from pydantic>=2.14->fusion-backup==0.1.1) (2.50.1)
+2026-10-18T20:48:57.1866441Z Requirement already satisfied: typing-inspection>=0.4.4 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from pydantic>=2.14->fusion-backup==0.1.1) (0.4.4)
+2026-10-18T20:48:57.1922760Z Requirement already satisfied: shellingham>=1.3.0 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from typer>=0.27->fusion-backup==0.1.1) (1.5.4)
+2026-10-18T20:48:57.1931455Z Requirement already satisfied: rich>=13.8.0 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from typer>=0.27->fusion-backup==0.1.1) (15.0.0)
+2026-10-18T20:48:57.1941037Z Requirement already satisfied: annotated-doc>=0.0.2 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from typer>=0.27->fusion-backup==0.1.1) (0.0.5)
+2026-10-18T20:48:57.1975035Z Requirement already satisfied: markdown-it-py>=2.2.0 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from rich>=13.8.0->typer>=0.27->fusion-backup==0.1.1) (4.2.0)
+2026-10-18T20:48:57.1983872Z Requirement already satisfied: pygments<3.0.0,>=2.13.0 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from rich>=13.8.0->typer>=0.27->fusion-backup==0.1.1) (2.21.0)
+2026-10-18T20:48:57.2013919Z Requirement already satisfied: mdurl~=0.1 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from markdown-it-py>=2.2.0->rich>=13.8.0->typer>=0.27->fusion-backup==0.1.1) (0.1.2)
+2026-10-18T20:48:57.2612050Z WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+2026-10-18T20:48:58.0705278Z ::group::Run fusion-backup run --repo . --summary-file "$RUNNER_TEMP/summary.txt"
+2026-10-18T20:48:58.0705856Z fusion-backup run --repo . --summary-file "$RUNNER_TEMP/summary.txt"
+2026-10-18T20:48:58.0706053Z shell: bash --noprofile --norc -e -o pipefail {0}
+2026-10-18T20:48:58.0706233Z env:
+2026-10-18T20:48:58.0706349Z   APS_CLIENT_ID: ***
+2026-10-18T20:48:58.0706470Z   APS_CLIENT_SECRET: ***
+2026-10-18T20:48:58.0706580Z   APS_SSA_ID: ***
+2026-10-18T20:48:58.0706741Z   APS_SSA_KEY_ID: ***
+2026-10-18T20:48:58.0706921Z   APS_SSA_PRIVATE_KEY: ***
+2026-10-18T20:48:58.0707100Z ::endgroup::
+2026-10-18T20:49:01.7562503Z [1/22] Downloading Small display v29 (.f3d)
+2026-10-18T20:49:03.2330660Z       2.3 MB in 1.5 s
+2026-10-18T20:49:03.2408060Z [2/22] Downloading Small assembly v132 (.f3d)
+2026-10-18T20:49:03.9679042Z       6.6 MB in 0.7 s
+2026-10-18T20:49:03.9871502Z [3/22] Downloading Large display v26 (.f3d)
+2026-10-18T20:49:04.5133406Z       2.4 MB in 0.5 s
+2026-10-18T20:49:04.5214206Z [4/22] Downloading Large assembly v49 (.f3d)
+2026-10-18T20:49:05.4940841Z       12.4 MB in 1.0 s
+2026-10-18T20:49:05.5294782Z [5/22] Downloading Chassis bracket v18 (.f3d)
+2026-10-18T20:49:05.9536902Z       169.1 KB in 0.4 s
+2026-10-18T20:49:05.9553702Z [6/22] Downloading reference-bay.step v1 (file)
+2026-10-18T20:49:06.4422048Z       535.0 KB in 0.5 s
+2026-10-18T20:49:06.4434909Z [7/22] Downloading reference-double-bay.step v1 (file)
+2026-10-18T20:49:06.9490491Z       486.6 KB in 0.5 s
+2026-10-18T20:49:06.9503640Z [8/22] Downloading Vibration motor v15 (.f3d)
+2026-10-18T20:49:07.3723804Z       546.4 KB in 0.4 s
+2026-10-18T20:49:07.3750680Z [9/22] Downloading Motor housing v41 (.f3d)
+2026-10-18T20:49:07.8580437Z       930.8 KB in 0.5 s
+2026-10-18T20:49:07.8619551Z [10/22] Downloading Threaded insert M3x4x5 v2 (.f3d)
+2026-10-18T20:49:08.3153374Z       362.7 KB in 0.5 s
+2026-10-18T20:49:08.3175816Z [11/22] Downloading Side clip v7 (.f3d)
+2026-10-18T20:49:08.6970778Z       63.2 KB in 0.4 s
+2026-10-18T20:49:08.6984233Z [12/22] Downloading Board carrier v1 (.f3d)
+2026-10-18T20:49:09.1789200Z       322.2 KB in 0.5 s
+2026-10-18T20:49:09.1810772Z [13/22] Downloading Screw M3x10 A2 (ISO10642) v1 (.f3d)
+2026-10-18T20:49:09.7103723Z       1.4 MB in 0.5 s
+2026-10-18T20:49:09.7152443Z [14/22] Downloading Screw M3x12 A2 (ISO10642) v1 (.f3d)
+2026-10-18T20:49:10.2471788Z       1.7 MB in 0.5 s
+2026-10-18T20:49:10.2525969Z [15/22] Downloading Shim plate v7 (.f3d)
+2026-10-18T20:49:10.7058410Z       239.5 KB in 0.5 s
+2026-10-18T20:49:10.7080057Z [16/22] Downloading Spacer ring v5 (.f3d)
+2026-10-18T20:49:11.2246770Z       124.5 KB in 0.5 s
+2026-10-18T20:49:11.2261770Z [17/22] Downloading Switch cap v2 (.f3d)
+2026-10-18T20:49:11.7021960Z       208.2 KB in 0.5 s
+2026-10-18T20:49:11.7037510Z [18/22] Downloading Front panel v57 (.f3d)
+2026-10-18T20:49:12.4489867Z       525.9 KB in 0.7 s
+2026-10-18T20:49:12.4516585Z [19/22] Downloading Wire guide A v3 (.f3d)
+2026-10-18T20:49:12.9539458Z       119.9 KB in 0.5 s
+2026-10-18T20:49:12.9554125Z [20/22] Downloading Wire guide B v6 (.f3d)
+2026-10-18T20:49:13.4160893Z       140.2 KB in 0.5 s
+2026-10-18T20:49:13.4176301Z [21/22] Downloading Supplier small display.STEP v1 (file)
+2026-10-18T20:49:13.9583337Z       1.4 MB in 0.5 s
+2026-10-18T20:49:13.9634720Z [22/22] Downloading Supplier large display.STEP v1 (file)
+2026-10-18T20:49:14.4492269Z       1.4 MB in 0.5 s
+2026-10-18T20:49:14.4542515Z [1/19] Generating STEP of Small display v29
+2026-10-18T20:49:18.9379930Z       in progress after 0 s
+2026-10-18T20:49:30.9067249Z       in progress after 12 s
+2026-10-18T20:49:42.3849419Z       in progress after 23 s
+2026-10-18T20:49:55.9822730Z       2.4 MB after 42 s
+2026-10-18T20:49:55.9897644Z [2/19] Generating STEP of Small assembly v132
+2026-10-18T20:49:59.5532703Z       in progress after 0 s
+2026-10-18T20:50:12.0436430Z       in progress after 12 s
+2026-10-18T20:50:24.1960423Z       in progress after 25 s
+2026-10-18T20:50:35.9705254Z       in progress after 36 s
+2026-10-18T20:50:50.0908884Z       43.2 MB after 54 s
+2026-10-18T20:50:50.2096900Z [3/19] Generating STEP of Large display v26
+2026-10-18T20:50:52.9342111Z       in progress after 0 s
+2026-10-18T20:51:04.6499877Z       in progress after 12 s
+2026-10-18T20:51:18.0084814Z       2.6 MB after 28 s
+2026-10-18T20:51:18.0162312Z [4/19] Generating STEP of Large assembly v49
+2026-10-18T20:51:21.4123286Z       in progress after 0 s
+2026-10-18T20:51:33.7265228Z       in progress after 12 s
+2026-10-18T20:51:45.4216077Z       in progress after 24 s
+2026-10-18T20:51:57.9711380Z       in progress after 37 s
+2026-10-18T20:52:09.7309755Z       in progress after 48 s
+2026-10-18T20:52:24.4162825Z       46.7 MB after 66 s
+2026-10-18T20:52:24.5539467Z [5/19] Generating STEP of Chassis bracket v18
+2026-10-18T20:52:27.6282339Z       60.6 KB after 3 s
+2026-10-18T20:52:27.6295455Z [6/19] Generating STEP of Vibration motor v15
+2026-10-18T20:52:30.0591330Z       in progress after 0 s
+2026-10-18T20:52:41.8954614Z       in progress after 12 s
+2026-10-18T20:52:54.5236966Z       418.7 KB after 27 s
+2026-10-18T20:52:54.5259729Z [7/19] Generating STEP of Motor housing v41
+2026-10-18T20:52:57.4705139Z       in progress after 0 s
+2026-10-18T20:53:10.9503239Z       1.1 MB after 16 s
+2026-10-18T20:53:10.9546538Z [8/19] Generating STEP of Threaded insert M3x4x5 v2
+2026-10-18T20:53:13.1458158Z       in progress after 0 s
+2026-10-18T20:53:24.7498513Z       in progress after 12 s
+2026-10-18T20:53:37.3299729Z       482.7 KB after 26 s
+2026-10-18T20:53:37.3319829Z [9/19] Generating STEP of Side clip v7
+2026-10-18T20:53:39.4383192Z       in progress after 0 s
+2026-10-18T20:53:51.1391742Z       in progress after 12 s
+2026-10-18T20:54:03.5151460Z       16.6 KB after 26 s
+2026-10-18T20:54:03.5164112Z [10/19] Generating STEP of Board carrier v1
+2026-10-18T20:54:05.5812230Z       in progress after 0 s
+2026-10-18T20:54:17.1604827Z       in progress after 12 s
+2026-10-18T20:54:29.8782954Z       201.7 KB after 26 s
+2026-10-18T20:54:29.8795886Z [11/19] Generating STEP of Screw M3x10 A2 (ISO10642) v1
+2026-10-18T20:54:32.8325132Z       1.1 MB after 3 s
+2026-10-18T20:54:32.8360231Z [12/19] Generating STEP of Screw M3x12 A2 (ISO10642) v1
+2026-10-18T20:54:34.9264489Z       in progress after 0 s
+2026-10-18T20:54:46.6390482Z       in progress after 12 s
+2026-10-18T20:54:59.2668768Z       1.4 MB after 26 s
+2026-10-18T20:54:59.2712542Z [13/19] Generating STEP of Screw M3x6 A2 (ISO10642) v1
+2026-10-18T20:55:02.1864176Z       223.4 KB after 3 s
+2026-10-18T20:55:02.1881946Z [14/19] Generating STEP of Shim plate v7
+2026-10-18T20:55:04.3381367Z       in progress after 0 s
+2026-10-18T20:55:16.9688885Z       131.2 KB after 15 s
+2026-10-18T20:55:16.9702350Z [15/19] Generating STEP of Spacer ring v5
+2026-10-18T20:55:19.0039253Z       in progress after 0 s
+2026-10-18T20:55:30.5419202Z       in progress after 12 s
+2026-10-18T20:55:42.9198225Z       57.1 KB after 26 s
+2026-10-18T20:55:42.9211304Z [16/19] Generating STEP of Switch cap v2
+2026-10-18T20:55:45.0034839Z       in progress after 0 s
+2026-10-18T20:55:56.5021638Z       in progress after 11 s
+2026-10-18T20:56:08.9903940Z       232.6 KB after 26 s
+2026-10-18T20:56:08.9924493Z [17/19] Generating STEP of Front panel v57
+2026-10-18T20:56:11.7662170Z       in progress after 0 s
+2026-10-18T20:56:24.0060741Z       in progress after 12 s
+2026-10-18T20:56:37.0815020Z       3.3 MB after 28 s
+2026-10-18T20:56:37.0919046Z [18/19] Generating STEP of Wire guide A v3
+2026-10-18T20:56:39.1755221Z       in progress after 0 s
+2026-10-18T20:56:51.6712006Z       318.6 KB after 15 s
+2026-10-18T20:56:51.6731208Z [19/19] Generating STEP of Wire guide B v6
+2026-10-18T20:56:53.8671861Z       in progress after 0 s
+2026-10-18T20:57:06.4065023Z       366.4 KB after 15 s
+2026-10-18T20:57:06.4094117Z Fusion backup 2026-10-18 20:48 UTC
+2026-10-18T20:57:06.4094689Z Cloud items checked: 29, files written: 39, STEPs generated: 19, STEPs pending: 0
+2026-10-18T20:57:06.4094913Z STEP jobs this month (MFG Data Model - standard jobs, counted by fusion-backup): 20
+2026-10-18T20:57:06.4095050Z Files written:
+2026-10-18T20:57:06.4095158Z   - my-cad-repo/small_display/cad/Small display.f3d (v29)
+2026-10-18T20:57:06.4095290Z   - my-cad-repo/small_assembly/cad/Small assembly.f3d (v132)
+2026-10-18T20:57:06.4095441Z   - my-cad-repo/large_display/cad/Large display.f3d (v26)
+2026-10-18T20:57:06.4095626Z   - my-cad-repo/large_assembly/cad/Large assembly.f3d (v49)
+2026-10-18T20:57:06.4095874Z   - my-cad-repo/parts/cad/Chassis bracket.f3d (v18)
+2026-10-18T20:57:06.4095989Z   - my-cad-repo/parts/cad/Vibration motor.f3d (v15)
+2026-10-18T20:57:06.4096100Z   - my-cad-repo/parts/cad/Motor housing.f3d (v41)
+2026-10-18T20:57:06.4096253Z   - my-cad-repo/parts/cad/Threaded insert M3x4x5.f3d (v2)
+2026-10-18T20:57:06.4096450Z   - my-cad-repo/parts/cad/Side clip.f3d (v7)
+2026-10-18T20:57:06.4096668Z   - my-cad-repo/parts/cad/Board carrier.f3d (v1)
+2026-10-18T20:57:06.4096983Z   - my-cad-repo/parts/cad/Screw M3x10 A2 (ISO10642).f3d (v1)
+2026-10-18T20:57:06.4097122Z   - my-cad-repo/parts/cad/Screw M3x12 A2 (ISO10642).f3d (v1)
+2026-10-18T20:57:06.4097246Z   - my-cad-repo/hardware/cad/Shim plate.f3d (v7)
+2026-10-18T20:57:06.4097361Z   - my-cad-repo/hardware/cad/Spacer ring.f3d (v5)
+2026-10-18T20:57:06.4097479Z   - my-cad-repo/hardware/cad/Switch cap.f3d (v2)
+2026-10-18T20:57:06.4097657Z   - my-cad-repo/parts/cad/Front panel.f3d (v57)
+2026-10-18T20:57:06.4098103Z   - my-cad-repo/hardware/cad/Wire guide A.f3d (v3)
+2026-10-18T20:57:06.4098358Z   - my-cad-repo/hardware/cad/Wire guide B.f3d (v6)
+2026-10-18T20:57:06.4098640Z   - my-cad-repo/small_display/cad/Supplier small display.STEP (v1)
+2026-10-18T20:57:06.4098812Z   - my-cad-repo/large_display/cad/Supplier large display.STEP (v1)
+2026-10-18T20:57:06.4099004Z   - my-cad-repo/small_display/cad/Small display.step (STEP of v29)
+2026-10-18T20:57:06.4099201Z   - my-cad-repo/small_assembly/cad/Small assembly.step (STEP of v132)
+2026-10-18T20:57:06.4099335Z   - my-cad-repo/large_display/cad/Large display.step (STEP of v26)
+2026-10-18T20:57:06.4099475Z   - my-cad-repo/large_assembly/cad/Large assembly.step (STEP of v49)
+2026-10-18T20:57:06.4099730Z   - my-cad-repo/parts/cad/Chassis bracket.step (STEP of v18)
+2026-10-18T20:57:06.4099933Z   - my-cad-repo/parts/cad/Vibration motor.step (STEP of v15)
+2026-10-18T20:57:06.4100128Z   - my-cad-repo/parts/cad/Motor housing.step (STEP of v41)
+2026-10-18T20:57:06.4100239Z   - my-cad-repo/parts/cad/Threaded insert M3x4x5.step (STEP of v2)
+2026-10-18T20:57:06.4100395Z   - my-cad-repo/parts/cad/Side clip.step (STEP of v7)
+2026-10-18T20:57:06.4100542Z   - my-cad-repo/parts/cad/Board carrier.step (STEP of v1)
+2026-10-18T20:57:06.4100736Z   - my-cad-repo/parts/cad/Screw M3x10 A2 (ISO10642).step (STEP of v1)
+2026-10-18T20:57:06.4100963Z   - my-cad-repo/parts/cad/Screw M3x12 A2 (ISO10642).step (STEP of v1)
+2026-10-18T20:57:06.4101126Z   - my-cad-repo/parts/cad/Screw M3x6 A2 (ISO10642).step (STEP of v1)
+2026-10-18T20:57:06.4101238Z   - my-cad-repo/hardware/cad/Shim plate.step (STEP of v7)
+2026-10-18T20:57:06.4101357Z   - my-cad-repo/hardware/cad/Spacer ring.step (STEP of v5)
+2026-10-18T20:57:06.4101475Z   - my-cad-repo/hardware/cad/Switch cap.step (STEP of v2)
+2026-10-18T20:57:06.4101588Z   - my-cad-repo/parts/cad/Front panel.step (STEP of v57)
+2026-10-18T20:57:06.4101785Z   - my-cad-repo/hardware/cad/Wire guide A.step (STEP of v3)
+2026-10-18T20:57:06.4101996Z   - my-cad-repo/hardware/cad/Wire guide B.step (STEP of v6)
+2026-10-18T20:57:07.2069245Z ::group::Run bash .gitea/scripts/commit-backup.sh "$RUNNER_TEMP/summary.txt"
+2026-10-18T20:57:07.2069789Z bash .gitea/scripts/commit-backup.sh "$RUNNER_TEMP/summary.txt"
+2026-10-18T20:57:07.2070044Z shell: bash --noprofile --norc -e -o pipefail {0}
+2026-10-18T20:57:07.2070200Z ::endgroup::
+2026-10-18T20:57:11.0869168Z add '.fusion-backup-state.json'
+2026-10-18T20:57:11.0870069Z add 'small_display/cad/Small display.f3d'
+2026-10-18T20:57:11.0870226Z add 'small_display/cad/Small display.step'
+2026-10-18T20:57:11.0870348Z add 'small_display/cad/Supplier small display.STEP'
+2026-10-18T20:57:11.0870468Z add 'small_assembly/cad/Small assembly.f3d'
+2026-10-18T20:57:11.0870675Z add 'small_assembly/cad/Small assembly.step'
+2026-10-18T20:57:11.0870889Z add 'large_display/cad/Large display.f3d'
+2026-10-18T20:57:11.0871141Z add 'large_display/cad/Large display.step'
+2026-10-18T20:57:11.0871336Z add 'large_display/cad/Supplier large display.STEP'
+2026-10-18T20:57:11.0871513Z add 'large_assembly/cad/Large assembly.f3d'
+2026-10-18T20:57:11.0871743Z add 'large_assembly/cad/Large assembly.step'
+2026-10-18T20:57:11.0871940Z add 'hardware/cad/Shim plate.f3d'
+2026-10-18T20:57:11.0872207Z add 'hardware/cad/Shim plate.step'
+2026-10-18T20:57:11.0872334Z add 'hardware/cad/Spacer ring.f3d'
+2026-10-18T20:57:11.0872466Z add 'hardware/cad/Spacer ring.step'
+2026-10-18T20:57:11.0872579Z add 'hardware/cad/Switch cap.f3d'
+2026-10-18T20:57:11.0872750Z add 'hardware/cad/Switch cap.step'
+2026-10-18T20:57:11.0872888Z add 'hardware/cad/Wire guide A.f3d'
+2026-10-18T20:57:11.0873009Z add 'hardware/cad/Wire guide A.step'
+2026-10-18T20:57:11.0873255Z add 'hardware/cad/Wire guide B.f3d'
+2026-10-18T20:57:11.0874017Z add 'hardware/cad/Wire guide B.step'
+2026-10-18T20:57:11.0874146Z add 'parts/cad/Chassis bracket.f3d'
+2026-10-18T20:57:11.0874273Z add 'parts/cad/Chassis bracket.step'
+2026-10-18T20:57:11.0874392Z add 'parts/cad/Vibration motor.f3d'
+2026-10-18T20:57:11.0874518Z add 'parts/cad/Vibration motor.step'
+2026-10-18T20:57:11.0874663Z add 'parts/cad/Motor housing.f3d'
+2026-10-18T20:57:11.0874932Z add 'parts/cad/Motor housing.step'
+2026-10-18T20:57:11.0875122Z add 'parts/cad/Threaded insert M3x4x5.f3d'
+2026-10-18T20:57:11.0875400Z add 'parts/cad/Side clip.f3d'
+2026-10-18T20:57:11.0875543Z add 'parts/cad/Side clip.step'
+2026-10-18T20:57:11.0875780Z add 'parts/cad/Board carrier.f3d'
+2026-10-18T20:57:11.0875961Z add 'parts/cad/Screw M3x6 A2 (ISO10642).step'
+2026-10-18T20:57:11.0876160Z add 'parts/cad/Front panel.f3d'
+2026-10-18T20:57:11.0876484Z add 'parts/cad/Front panel.step'
+2026-10-18T20:57:11.0876678Z add 'parts/cad/Threaded insert M3x4x5.step'
+2026-10-18T20:57:11.0876795Z add 'parts/cad/Board carrier.step'
+2026-10-18T20:57:11.0876956Z add 'parts/cad/Screw M3x10 A2 (ISO10642).f3d'
+2026-10-18T20:57:11.0877197Z add 'parts/cad/Screw M3x10 A2 (ISO10642).step'
+2026-10-18T20:57:11.0877366Z add 'parts/cad/Screw M3x12 A2 (ISO10642).f3d'
+2026-10-18T20:57:11.0877470Z add 'parts/cad/Screw M3x12 A2 (ISO10642).step'
+2026-10-18T20:57:13.1833360Z  .fusion-backup-state.json                          |     149 +-
+2026-10-18T20:57:13.1833967Z  small_display/cad/Small display.f3d                 |     Bin 1554607 -> 2302569 bytes
+2026-10-18T20:57:13.1834141Z  small_display/cad/Small display.step                |   66502 +-
+2026-10-18T20:57:13.1834268Z  small_display/cad/Supplier small display.STEP        |   35250 +-
+2026-10-18T20:57:13.1834449Z  small_assembly/cad/Small assembly.f3d     |     Bin 3817436 -> 6609177 bytes
+2026-10-18T20:57:13.1834572Z  small_assembly/cad/Small assembly.step    | 1570184 +++++++--------
+2026-10-18T20:57:13.1834695Z  large_display/cad/Large display.f3d                 |     Bin 1644841 -> 2404071 bytes
+2026-10-18T20:57:13.1834884Z  large_display/cad/Large display.step                |   66563 +-
+2026-10-18T20:57:13.1835008Z  large_display/cad/Supplier large display.STEP        |   35010 +-
+2026-10-18T20:57:13.1835121Z  large_assembly/cad/Large assembly.f3d     |     Bin 5979987 -> 12422992 bytes
+2026-10-18T20:57:13.1835239Z  large_assembly/cad/Large assembly.step    | 1734648 +++++++++--------
+2026-10-18T20:57:13.1835413Z  hardware/cad/Shim plate.f3d                    |     Bin 217942 -> 239470 bytes
+2026-10-18T20:57:13.1835531Z  hardware/cad/Shim plate.step                   |    5886 +-
+2026-10-18T20:57:13.1835639Z  hardware/cad/Spacer ring.f3d              |     Bin 119586 -> 124455 bytes
+2026-10-18T20:57:13.1835810Z  hardware/cad/Spacer ring.step             |    2749 +-
+2026-10-18T20:57:13.1835943Z  hardware/cad/Switch cap.f3d                |     Bin 199556 -> 208207 bytes
+2026-10-18T20:57:13.1836170Z  hardware/cad/Switch cap.step               |   10161 +-
+2026-10-18T20:57:13.1836348Z  hardware/cad/Wire guide A.f3d                        |     Bin 102755 -> 119942 bytes
+2026-10-18T20:57:13.1836618Z  hardware/cad/Wire guide A.step                       |   14267 +-
+2026-10-18T20:57:13.1836836Z  hardware/cad/Wire guide B.f3d                        |     Bin 123555 -> 140176 bytes
+2026-10-18T20:57:13.1837040Z  hardware/cad/Wire guide B.step                       |   15905 +-
+2026-10-18T20:57:13.1837345Z  parts/cad/Chassis bracket.f3d           |     Bin 155656 -> 169119 bytes
+2026-10-18T20:57:13.1837726Z  parts/cad/Chassis bracket.step          |    2680 +-
+2026-10-18T20:57:13.1838201Z  parts/cad/Vibration motor.f3d   |     Bin 527831 -> 546368 bytes
+2026-10-18T20:57:13.1838352Z  parts/cad/Vibration motor.step  |   16774 +-
+2026-10-18T20:57:13.1838665Z  parts/cad/Motor housing.f3d          |     Bin 1263332 -> 930849 bytes
+2026-10-18T20:57:13.1838783Z  parts/cad/Motor housing.step         |   41482 +-
+2026-10-18T20:57:13.1838991Z  parts/cad/Threaded insert M3x4x5.f3d    |     Bin 347895 -> 362700 bytes
+2026-10-18T20:57:13.1839278Z  parts/cad/Threaded insert M3x4x5.step   |    9535 +
+2026-10-18T20:57:13.1839475Z  .../cad/Side clip.f3d   |     Bin 59190 -> 63202 bytes
+2026-10-18T20:57:13.1839680Z  .../cad/Side clip.step  |     854 +-
+2026-10-18T20:57:13.1839877Z  parts/cad/Board carrier.f3d      |     Bin 308590 -> 322219 bytes
+2026-10-18T20:57:13.1840140Z  parts/cad/Board carrier.step     |    4861 +
+2026-10-18T20:57:13.1840331Z  parts/cad/Screw M3x10 A2 (ISO10642).f3d |     Bin 0 -> 1353942 bytes
+2026-10-18T20:57:13.1840569Z  .../cad/Screw M3x10 A2 (ISO10642).step             |   16551 +
+2026-10-18T20:57:13.1840839Z  parts/cad/Screw M3x12 A2 (ISO10642).f3d |     Bin 0 -> 1743674 bytes
+2026-10-18T20:57:13.1841033Z  .../cad/Screw M3x12 A2 (ISO10642).step             |   22396 +
+2026-10-18T20:57:13.1841219Z  parts/cad/Screw M3x6 A2 (ISO10642).step |    7240 +-
+2026-10-18T20:57:13.1841417Z  parts/cad/Front panel.f3d              |     Bin 530158 -> 525878 bytes
+2026-10-18T20:57:13.1841661Z  parts/cad/Front panel.step             |  131263 +-
+2026-10-18T20:57:13.1841768Z  40 files changed, 2002577 insertions(+), 1808333 deletions(-)
+2026-10-18T20:57:14.9524047Z [master 70f9e5e] chore(backup): Fusion backup
+2026-10-18T20:57:14.9525289Z  40 files changed, 2002577 insertions(+), 1808333 deletions(-)
+2026-10-18T20:57:14.9525467Z  create mode 100644 parts/cad/Threaded insert M3x4x5.step
+2026-10-18T20:57:14.9525696Z  create mode 100644 parts/cad/Board carrier.step
+2026-10-18T20:57:14.9525911Z  create mode 100644 parts/cad/Screw M3x10 A2 (ISO10642).f3d
+2026-10-18T20:57:14.9526303Z  create mode 100644 parts/cad/Screw M3x10 A2 (ISO10642).step
+2026-10-18T20:57:14.9526427Z  create mode 100644 parts/cad/Screw M3x12 A2 (ISO10642).f3d
+2026-10-18T20:57:14.9526547Z  create mode 100644 parts/cad/Screw M3x12 A2 (ISO10642).step
+2026-10-18T20:57:35.3441426Z To https://gitea.example.com/example-org/my-cad-repo
+2026-10-18T20:57:35.3442206Z    6fe3aba..70f9e5e  master -> master
+2026-10-18T20:57:35.8773209Z evaluating expression 'success()'
+2026-10-18T20:57:35.8773948Z expression 'success()' evaluated to 'true'
+2026-10-18T20:57:35.8774118Z ⭐ Run Post actions/setup-python@v6
+2026-10-18T20:57:35.8774392Z Writing entry to tarball workflow/outputcmd.txt len:0
+2026-10-18T20:57:35.8774599Z Writing entry to tarball workflow/statecmd.txt len:0
+2026-10-18T20:57:35.8774744Z Writing entry to tarball workflow/pathcmd.txt len:0
+2026-10-18T20:57:35.8775095Z Writing entry to tarball workflow/envs.txt len:0
+2026-10-18T20:57:35.8775281Z Writing entry to tarball workflow/SUMMARY.md len:0
+2026-10-18T20:57:35.8775453Z Extracting content to '/var/run/act'
+2026-10-18T20:57:35.9880999Z run post step for 'actions/setup-python@v6'
+2026-10-18T20:57:35.9882179Z executing remote job container: [node /var/run/act/actions/0bca5aae813b99e4ba4d537615b05d4ed693b584800702db110fd915a7cbdbb5/dist/cache-save/index.js]
+2026-10-18T20:57:35.9899224Z   🐳  docker exec cmd=[node /var/run/act/actions/0bca5aae813b99e4ba4d537615b05d4ed693b584800702db110fd915a7cbdbb5/dist/cache-save/index.js] user= workdir=
+2026-10-18T20:57:35.9899830Z Exec command '[node /var/run/act/actions/0bca5aae813b99e4ba4d537615b05d4ed693b584800702db110fd915a7cbdbb5/dist/cache-save/index.js]'
+2026-10-18T20:57:35.9901483Z Working directory '/workspace/example-org/my-cad-repo'
+2026-10-18T20:57:36.2558968Z   ✅  Success - Post actions/setup-python@v6
+2026-10-18T20:57:36.6976017Z evaluating expression 'always()'
+2026-10-18T20:57:36.6976782Z expression 'always()' evaluated to 'true'
+2026-10-18T20:57:36.6976960Z ⭐ Run Post actions/checkout@v5
+2026-10-18T20:57:36.6977210Z Writing entry to tarball workflow/outputcmd.txt len:0
+2026-10-18T20:57:36.6977451Z Writing entry to tarball workflow/statecmd.txt len:0
+2026-10-18T20:57:36.6977712Z Writing entry to tarball workflow/pathcmd.txt len:0
+2026-10-18T20:57:36.6978260Z Writing entry to tarball workflow/envs.txt len:0
+2026-10-18T20:57:36.6978399Z Writing entry to tarball workflow/SUMMARY.md len:0
+2026-10-18T20:57:36.6978737Z Extracting content to '/var/run/act'
+2026-10-18T20:57:36.7993551Z run post step for 'actions/checkout@v5'
+2026-10-18T20:57:36.7994909Z executing remote job container: [node /var/run/act/actions/4f2b73f02470fcce346e867a2347cf2272d798014969991b71875b2592508807/dist/index.js]
+2026-10-18T20:57:36.8015387Z   🐳  docker exec cmd=[node /var/run/act/actions/4f2b73f02470fcce346e867a2347cf2272d798014969991b71875b2592508807/dist/index.js] user= workdir=
+2026-10-18T20:57:36.8015997Z Exec command '[node /var/run/act/actions/4f2b73f02470fcce346e867a2347cf2272d798014969991b71875b2592508807/dist/index.js]'
+2026-10-18T20:57:36.8019010Z Working directory '/workspace/example-org/my-cad-repo'
+2026-10-18T20:57:36.9846428Z [command]/usr/bin/git version
+2026-10-18T20:57:36.9915968Z git version 2.55.0
+2026-10-18T20:57:36.9951707Z ***
+2026-10-18T20:57:36.9978319Z Temporarily overriding HOME='/tmp/88a46116-e03d-4131-a776-ee70d5306537' before making global git config changes
+2026-10-18T20:57:36.9978943Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-18T20:57:36.9987951Z [command]/usr/bin/git config --global --add safe.directory /workspace/example-org/my-cad-repo
+2026-10-18T20:57:37.0054771Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-18T20:57:37.0116727Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-18T20:57:37.0675101Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/gitea\.example\.com\/\.extraheader
+2026-10-18T20:57:37.0731522Z http.https://gitea.example.com/.extraheader
+2026-10-18T20:57:37.0745334Z [command]/usr/bin/git config --local --unset-all http.https://gitea.example.com/.extraheader
+2026-10-18T20:57:37.0809322Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/gitea\.example\.com\/\.extraheader' && git config --local --unset-all 'http.https://gitea.example.com/.extraheader' || :"
+2026-10-18T20:57:37.1352907Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-18T20:57:37.1415662Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-18T20:57:37.2143044Z   ✅  Success - Post actions/checkout@v5
+2026-10-18T20:57:37.6229697Z Cleaning up container for job backup
+2026-10-18T20:57:37.8279098Z Removed container: b7677c30dcffdde4af5f03aaf7fa0d76a5d2b1be2c9365bdc587f947259cfcfe
+2026-10-18T20:57:37.8300247Z   🐳  docker volume rm GITEA-ACTIONS-TASK-3-WORKFLOW-Fusion-backup-JOB-backup-6cca6e67ae13566b951c518501b4f2be64a997d2ac203bc403d43ee786eef6d4
+2026-10-18T20:57:37.9585065Z   🐳  docker volume rm GITEA-ACTIONS-TASK-3-WORKFLOW-Fusion-backup-JOB-backup-6cca6e67ae13566b951c518501b4f2be64a997d2ac203bc403d43ee786eef6d4-env
+2026-10-18T20:57:38.1449070Z 🏁  Job succeeded
