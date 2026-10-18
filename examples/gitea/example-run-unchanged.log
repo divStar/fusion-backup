@@ -1,0 +1,220 @@
+# The complete log of the run after example-run.log, with nothing changed in the cloud: no downloads, no STEP jobs,
+# no commit. Anonymised the same way: repository and host replaced, everything else unchanged.
+
+2026-10-18T21:47:48.5257109Z docker-runner(version:v0.6.1) received task 4 of job backup, be triggered by event: workflow_dispatch
+2026-10-18T21:47:48.5262760Z workflow prepared
+2026-10-18T21:47:48.5263875Z evaluating expression 'always()'
+2026-10-18T21:47:48.5264901Z expression 'always()' evaluated to 'true'
+2026-10-18T21:47:48.5265134Z 🚀  Start image=docker.gitea.com/runner-images:ubuntu-latest
+2026-10-18T21:47:48.5396293Z   🐳  docker pull image=docker.gitea.com/runner-images:ubuntu-latest platform= username= forcePull=false
+2026-10-18T21:47:48.5396519Z   🐳  docker pull docker.gitea.com/runner-images:ubuntu-latest
+2026-10-18T21:47:48.5416598Z Image exists? true
+2026-10-18T21:47:48.5517291Z   🐳  docker create image=docker.gitea.com/runner-images:ubuntu-latest platform= entrypoint=["/bin/sleep" "10800"] cmd=[] network="service-network"
+2026-10-18T21:47:48.5689852Z Custom container.Config from options ==> &{Hostname: Domainname: User: AttachStdin:false AttachStdout:true AttachStderr:true ExposedPorts:map[] Tty:false OpenStdin:false StdinOnce:false Env:[] Cmd:[] Healthcheck:<nil> ArgsEscaped:false Image: Volumes:map[] WorkingDir: Entrypoint:[] NetworkDisabled:false MacAddress: OnBuild:[] Labels:map[] StopSignal: StopTimeout:<nil> Shell:[]}
+2026-10-18T21:47:48.5690558Z Merged container.Config ==> &{Hostname: Domainname: User: AttachStdin:false AttachStdout:true AttachStderr:true ExposedPorts:map[] Tty:false OpenStdin:false StdinOnce:false Env:[RUNNER_TOOL_CACHE=/opt/hostedtoolcache RUNNER_OS=Linux RUNNER_ARCH=X64 RUNNER_TEMP=/tmp LANG=C.UTF-8] Cmd:[] Healthcheck:<nil> ArgsEscaped:false Image:docker.gitea.com/runner-images:ubuntu-latest Volumes:map[] WorkingDir:/workspace/example-org/my-cad-repo Entrypoint:[/bin/sleep 10800] NetworkDisabled:false MacAddress: OnBuild:[] Labels:map[] StopSignal: StopTimeout:<nil> Shell:[]}
+2026-10-18T21:47:48.5691222Z Custom container.HostConfig from options ==> &{Binds:[/etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro] ContainerIDFile: LogConfig:{Type: Config:map[]} NetworkMode:service-network PortBindings:map[] RestartPolicy:{Name:no MaximumRetryCount:0} AutoRemove:false VolumeDriver: VolumesFrom:[] ConsoleSize:[0 0] Annotations:map[] CapAdd:[] CapDrop:[] CgroupnsMode: DNS:[] DNSOptions:[] DNSSearch:[] ExtraHosts:[] GroupAdd:[] IpcMode: Cgroup: Links:[] OomScoreAdj:0 PidMode: Privileged:false PublishAllPorts:false ReadonlyRootfs:false SecurityOpt:[] StorageOpt:map[] Tmpfs:map[] UTSMode: UsernsMode: ShmSize:0 Sysctls:map[] Runtime: Isolation: Resources:{CPUShares:0 Memory:0 NanoCPUs:0 CgroupParent: BlkioWeight:0 BlkioWeightDevice:[] BlkioDeviceReadBps:[] BlkioDeviceWriteBps:[] BlkioDeviceReadIOps:[] BlkioDeviceWriteIOps:[] CPUPeriod:0 CPUQuota:0 CPURealtimePeriod:0 CPURealtimeRuntime:0 CpusetCpus: CpusetMems: Devices:[] DeviceCgroupRules:[] DeviceRequests:[] KernelMemory:0 KernelMemoryTCP:0 MemoryReservation:0 MemorySwap:0 MemorySwappiness:0x32f7ff28e3c8 OomKillDisable:0x32f7ff28e2c3 PidsLimit:0x32f7ff28e428 Ulimits:[] CPUCount:0 CPUPercent:0 IOMaximumIOps:0 IOMaximumBandwidth:0} Mounts:[] MaskedPaths:[] ReadonlyPaths:[] Init:<nil>}
+2026-10-18T21:47:48.5692001Z --network and --net in the options will be ignored.
+2026-10-18T21:47:48.5692428Z Merged container.HostConfig ==> &{Binds:[/etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro] ContainerIDFile: LogConfig:{Type: Config:map[]} NetworkMode:service-network PortBindings:map[] RestartPolicy:{Name:no MaximumRetryCount:0} AutoRemove:true VolumeDriver: VolumesFrom:[] ConsoleSize:[0 0] Annotations:map[] CapAdd:[] CapDrop:[] CgroupnsMode: DNS:[] DNSOptions:[] DNSSearch:[] ExtraHosts:[] GroupAdd:[] IpcMode: Cgroup: Links:[] OomScoreAdj:0 PidMode: Privileged:true PublishAllPorts:false ReadonlyRootfs:false SecurityOpt:[] StorageOpt:map[] Tmpfs:map[] UTSMode: UsernsMode: ShmSize:0 Sysctls:map[] Runtime: Isolation: Resources:{CPUShares:0 Memory:0 NanoCPUs:0 CgroupParent: BlkioWeight:0 BlkioWeightDevice:[] BlkioDeviceReadBps:[] BlkioDeviceWriteBps:[] BlkioDeviceReadIOps:[] BlkioDeviceWriteIOps:[] CPUPeriod:0 CPUQuota:0 CPURealtimePeriod:0 CPURealtimeRuntime:0 CpusetCpus: CpusetMems: Devices:[] DeviceCgroupRules:[] DeviceRequests:[] KernelMemory:0 KernelMemoryTCP:0 MemoryReservation:0 MemorySwap:0 MemorySwappiness:0x32f7ff28e3c8 OomKillDisable:0x32f7ff28e2c3 PidsLimit:0x32f7ff28e428 Ulimits:[] CPUCount:0 CPUPercent:0 IOMaximumIOps:0 IOMaximumBandwidth:0} Mounts:[{Type:volume Source:act-toolcache Target:/opt/hostedtoolcache ReadOnly:false Consistency: BindOptions:<nil> VolumeOptions:<nil> TmpfsOptions:<nil> ClusterOptions:<nil>} {Type:volume Source:GITEA-ACTIONS-TASK-4-WORKFLOW-Fusion-backup-JOB-backup-f5d80660331098c91bc129da25ab316e40dc4830b5661d5469b9dab549038e94-env Target:/var/run/act ReadOnly:false Consistency: BindOptions:<nil> VolumeOptions:<nil> TmpfsOptions:<nil> ClusterOptions:<nil>} {Type:volume Source:GITEA-ACTIONS-TASK-4-WORKFLOW-Fusion-backup-JOB-backup-f5d80660331098c91bc129da25ab316e40dc4830b5661d5469b9dab549038e94 Target:/workspace/example-org/my-cad-repo ReadOnly:false Consistency: BindOptions:<nil> VolumeOptions:<nil> TmpfsOptions:<nil> ClusterOptions:<nil>}] MaskedPaths:[] ReadonlyPaths:[] Init:<nil>}
+2026-10-18T21:47:48.7152755Z Created container name=GITEA-ACTIONS-TASK-4-WORKFLOW-Fusion-backup-JOB-backup-f5d80660331098c91bc129da25ab316e40dc4830b5661d5469b9dab549038e94 id=700263b6be9aa58e249f696f486dd06b4d650ae1edc41fbe5deda27d18cd921d from image docker.gitea.com/runner-images:ubuntu-latest (platform: )
+2026-10-18T21:47:48.7153736Z ENV ==> [RUNNER_TOOL_CACHE=/opt/hostedtoolcache RUNNER_OS=Linux RUNNER_ARCH=X64 RUNNER_TEMP=/tmp LANG=C.UTF-8]
+2026-10-18T21:47:48.7153939Z   🐳  docker run image=docker.gitea.com/runner-images:ubuntu-latest platform= entrypoint=["/bin/sleep" "10800"] cmd=[] network="service-network"
+2026-10-18T21:47:48.7154166Z Starting container: 700263b6be9aa58e249f696f486dd06b4d650ae1edc41fbe5deda27d18cd921d
+2026-10-18T21:47:49.0105804Z Started container: 700263b6be9aa58e249f696f486dd06b4d650ae1edc41fbe5deda27d18cd921d
+2026-10-18T21:47:49.0821142Z Writing entry to tarball workflow/event.json len:3303
+2026-10-18T21:47:49.0822024Z Writing entry to tarball workflow/envs.txt len:0
+2026-10-18T21:47:49.0822323Z Extracting content to '/var/run/act/'
+2026-10-18T21:47:49.1733161Z   ☁  git clone 'https://github.com/actions/checkout' # ref=v5
+2026-10-18T21:47:49.1733801Z   cloning https://github.com/actions/checkout to /root/.cache/act/4f2b73f02470fcce346e867a2347cf2272d798014969991b71875b2592508807
+2026-10-18T21:47:49.9510974Z Unable to pull refs/heads/v5: non-fast-forward update
+2026-10-18T21:47:49.9511618Z Cloned https://github.com/actions/checkout to /root/.cache/act/4f2b73f02470fcce346e867a2347cf2272d798014969991b71875b2592508807
+2026-10-18T21:47:49.9632179Z Checked out v5
+2026-10-18T21:47:49.9775576Z   ☁  git clone 'https://github.com/actions/setup-python' # ref=v6
+2026-10-18T21:47:49.9776060Z   cloning https://github.com/actions/setup-python to /root/.cache/act/0bca5aae813b99e4ba4d537615b05d4ed693b584800702db110fd915a7cbdbb5
+2026-10-18T21:47:50.6072864Z Unable to pull refs/heads/v6: worktree contains unstaged changes
+2026-10-18T21:47:50.6073467Z Cloned https://github.com/actions/setup-python to /root/.cache/act/0bca5aae813b99e4ba4d537615b05d4ed693b584800702db110fd915a7cbdbb5
+2026-10-18T21:47:50.6240314Z Checked out v6
+2026-10-18T21:47:50.6630198Z evaluating expression ''
+2026-10-18T21:47:50.6631004Z expression '' evaluated to 'true'
+2026-10-18T21:47:50.6631179Z ⭐ Run Main actions/checkout@v5
+2026-10-18T21:47:50.6631430Z Writing entry to tarball workflow/outputcmd.txt len:0
+2026-10-18T21:47:50.6631647Z Writing entry to tarball workflow/statecmd.txt len:0
+2026-10-18T21:47:50.6631994Z Writing entry to tarball workflow/pathcmd.txt len:0
+2026-10-18T21:47:50.6632142Z Writing entry to tarball workflow/envs.txt len:0
+2026-10-18T21:47:50.6632255Z Writing entry to tarball workflow/SUMMARY.md len:0
+2026-10-18T21:47:50.6632395Z Extracting content to '/var/run/act'
+2026-10-18T21:47:50.7268256Z ::group::Run actions/checkout@v5
+2026-10-18T21:47:51.5475521Z ::add-matcher::/run/act/actions/4f2b73f02470fcce346e867a2347cf2272d798014969991b71875b2592508807/dist/problem-matcher.json
+2026-10-18T21:47:51.5481606Z Syncing repository: example-org/my-cad-repo
+2026-10-18T21:47:51.5486128Z ::group::Getting Git version info
+2026-10-18T21:47:51.5487303Z Working directory is '/workspace/example-org/my-cad-repo'
+2026-10-18T21:47:51.5544174Z [command]/usr/bin/git version
+2026-10-18T21:47:51.5613841Z git version 2.55.0
+2026-10-18T21:47:51.5648518Z ::endgroup::
+2026-10-18T21:47:51.5678143Z Temporarily overriding HOME='/tmp/9c940b77-ed6d-4471-a2c5-ed71bd8c0630' before making global git config changes
+2026-10-18T21:47:51.5678610Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-18T21:47:51.5685721Z [command]/usr/bin/git config --global --add safe.directory /workspace/example-org/my-cad-repo
+2026-10-18T21:47:51.5749585Z Deleting the contents of '/workspace/example-org/my-cad-repo'
+2026-10-18T21:47:51.5757014Z ::group::Initializing the repository
+2026-10-18T21:47:51.5764102Z [command]/usr/bin/git init /workspace/example-org/my-cad-repo
+2026-10-18T21:47:51.5847033Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-18T21:47:51.5847523Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-18T21:47:51.5847688Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-18T21:47:51.5848061Z hint: call:
+2026-10-18T21:47:51.5848172Z hint:
+2026-10-18T21:47:51.5848275Z hint: 	git config --global init.defaultBranch <name>
+2026-10-18T21:47:51.5848416Z hint:
+2026-10-18T21:47:51.5848512Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-18T21:47:51.5848621Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-18T21:47:51.5848737Z hint:
+2026-10-18T21:47:51.5848876Z hint: 	git branch -m <name>
+2026-10-18T21:47:51.5848977Z hint:
+2026-10-18T21:47:51.5849065Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-18T21:47:51.5849364Z Initialized empty Git repository in /workspace/example-org/my-cad-repo/.git/
+2026-10-18T21:47:51.5869769Z [command]/usr/bin/git remote add origin https://gitea.example.com/example-org/my-cad-repo
+2026-10-18T21:47:51.5931121Z ::endgroup::
+2026-10-18T21:47:51.5931422Z ::group::Disabling automatic garbage collection
+2026-10-18T21:47:51.5937419Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-18T21:47:51.5993270Z ::endgroup::
+2026-10-18T21:47:51.5993667Z ::group::Setting up auth
+2026-10-18T21:47:51.6003301Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-18T21:47:51.6064323Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-18T21:47:51.6628982Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/gitea\.example\.com\/\.extraheader
+2026-10-18T21:47:51.6713356Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/gitea\.example\.com\/\.extraheader' && git config --local --unset-all 'http.https://gitea.example.com/.extraheader' || :"
+2026-10-18T21:47:51.7265889Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-18T21:47:51.7334543Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-18T21:47:51.7879238Z [command]/usr/bin/git config --local http.https://gitea.example.com/.extraheader AUTHORIZATION: basic ***
+2026-10-18T21:47:51.7956437Z ::endgroup::
+2026-10-18T21:47:51.7956771Z ::group::Fetching the repository
+2026-10-18T21:47:51.7969820Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +22293b3380a8b05a14c6c261e0117b4e9532fe87:refs/remotes/origin/master
+2026-10-18T21:48:07.4151641Z From https://gitea.example.com/example-org/my-cad-repo
+2026-10-18T21:48:07.4152376Z  * [new ref]         22293b3380a8b05a14c6c261e0117b4e9532fe87 -> origin/master
+2026-10-18T21:48:07.4158890Z ::endgroup::
+2026-10-18T21:48:07.4159173Z ::group::Determining the checkout info
+2026-10-18T21:48:07.4163151Z ::endgroup::
+2026-10-18T21:48:07.4171137Z [command]/usr/bin/git sparse-checkout disable
+2026-10-18T21:48:07.4246210Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-18T21:48:07.4298506Z ::group::Checking out the ref
+2026-10-18T21:48:07.4304837Z [command]/usr/bin/git checkout --progress --force -B master refs/remotes/origin/master
+2026-10-18T21:48:08.4445615Z Updating files:  99% (158/159)
+Updating files: 100% (159/159)
+Updating files: 100% (159/159), done.
+2026-10-18T21:48:08.4472886Z Reset branch 'master'
+2026-10-18T21:48:08.4476979Z branch 'master' set up to track 'origin/master'.
+2026-10-18T21:48:08.4595155Z ::endgroup::
+2026-10-18T21:48:08.4668305Z [command]/usr/bin/git log -1 --format=%H
+2026-10-18T21:48:08.4724643Z 22293b3380a8b05a14c6c261e0117b4e9532fe87
+2026-10-18T21:48:08.4746955Z ::remove-matcher owner=checkout-git::
+2026-10-18T21:48:08.4944205Z ::endgroup::
+2026-10-18T21:48:08.9611268Z ::group::Run actions/setup-python@v6
+2026-10-18T21:48:08.9612560Z with:
+2026-10-18T21:48:08.9612746Z   python-version: 3.14
+2026-10-18T21:48:09.9322381Z ::group::Installed versions
+2026-10-18T21:48:09.9405318Z Successfully set up CPython (3.14.8)
+2026-10-18T21:48:09.9406141Z ::endgroup::
+2026-10-18T21:48:09.9406913Z ##[add-matcher]/run/act/actions/0bca5aae813b99e4ba4d537615b05d4ed693b584800702db110fd915a7cbdbb5/.github/python.json
+2026-10-18T21:48:09.9565883Z ::endgroup::
+2026-10-18T21:48:10.7086663Z ::group::Run pip install "git+https://github.com/divStar/fusion-backup"
+2026-10-18T21:48:10.7087282Z pip install "git+https://github.com/divStar/fusion-backup"
+2026-10-18T21:48:10.7087489Z shell: bash --noprofile --norc -e -o pipefail {0}
+2026-10-18T21:48:10.7087638Z ::endgroup::
+2026-10-18T21:48:11.4759907Z Collecting git+https://github.com/divStar/fusion-backup
+2026-10-18T21:48:11.4772082Z   Cloning https://github.com/divStar/fusion-backup to /tmp/pip-req-build-9kskzujg
+2026-10-18T21:48:11.4813404Z   Running command git clone --filter=blob:none --quiet https://github.com/divStar/fusion-backup /tmp/pip-req-build-9kskzujg
+2026-10-18T21:48:12.5472871Z   Resolved https://github.com/divStar/fusion-backup to commit cd1067351cc513fad3f5afff08b38c5637dba85a
+2026-10-18T21:48:12.5544428Z   Installing build dependencies: started
+2026-10-18T21:48:13.9953082Z   Installing build dependencies: finished with status 'done'
+2026-10-18T21:48:13.9963826Z   Getting requirements to build wheel: started
+2026-10-18T21:48:14.3335881Z   Getting requirements to build wheel: finished with status 'done'
+2026-10-18T21:48:14.3353682Z   Preparing metadata (pyproject.toml): started
+2026-10-18T21:48:14.7131406Z   Preparing metadata (pyproject.toml): finished with status 'done'
+2026-10-18T21:48:14.7162557Z Requirement already satisfied: authlib>=1.9 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from fusion-backup==0.1.1) (1.9.1)
+2026-10-18T21:48:14.7169266Z Requirement already satisfied: httpx2>=2.13 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from fusion-backup==0.1.1) (2.14.0)
+2026-10-18T21:48:14.7178560Z Requirement already satisfied: joserfc>=1.7 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from fusion-backup==0.1.1) (1.7.5)
+2026-10-18T21:48:14.7184752Z Requirement already satisfied: pydantic>=2.14 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from fusion-backup==0.1.1) (2.14.1)
+2026-10-18T21:48:14.7190441Z Requirement already satisfied: typer>=0.27 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from fusion-backup==0.1.1) (0.27.3)
+2026-10-18T21:48:14.7206021Z Requirement already satisfied: cryptography>=45.0.1 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from authlib>=1.9->fusion-backup==0.1.1) (50.0.2)
+2026-10-18T21:48:14.7225841Z Requirement already satisfied: cffi>=2.0.0 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from cryptography>=45.0.1->authlib>=1.9->fusion-backup==0.1.1) (2.1.1)
+2026-10-18T21:48:14.7243613Z Requirement already satisfied: pycparser in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from cffi>=2.0.0->cryptography>=45.0.1->authlib>=1.9->fusion-backup==0.1.1) (3.11)
+2026-10-18T21:48:14.7262544Z Requirement already satisfied: anyio>=4.10 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from httpx2>=2.13->fusion-backup==0.1.1) (4.15.1)
+2026-10-18T21:48:14.7271869Z Requirement already satisfied: httpcore2==2.14.0 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from httpx2>=2.13->fusion-backup==0.1.1) (2.14.0)
+2026-10-18T21:48:14.7280177Z Requirement already satisfied: idna>=3.18 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from httpx2>=2.13->fusion-backup==0.1.1) (3.20)
+2026-10-18T21:48:14.7289032Z Requirement already satisfied: truststore>=0.10 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from httpx2>=2.13->fusion-backup==0.1.1) (0.10.5)
+2026-10-18T21:48:14.7320954Z Requirement already satisfied: h11>=0.16 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from httpcore2==2.14.0->httpx2>=2.13->fusion-backup==0.1.1) (0.16.0)
+2026-10-18T21:48:14.7344114Z Requirement already satisfied: typing_extensions>=4.16.0 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from anyio>=4.10->httpx2>=2.13->fusion-backup==0.1.1) (4.16.0)
+2026-10-18T21:48:14.7424032Z Requirement already satisfied: annotated-types>=0.6.0 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from pydantic>=2.14->fusion-backup==0.1.1) (0.8.0)
+2026-10-18T21:48:14.7430294Z Requirement already satisfied: pydantic-core==2.50.1 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from pydantic>=2.14->fusion-backup==0.1.1) (2.50.1)
+2026-10-18T21:48:14.7438184Z Requirement already satisfied: typing-inspection>=0.4.4 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from pydantic>=2.14->fusion-backup==0.1.1) (0.4.4)
+2026-10-18T21:48:14.7487255Z Requirement already satisfied: shellingham>=1.3.0 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from typer>=0.27->fusion-backup==0.1.1) (1.5.4)
+2026-10-18T21:48:14.7494133Z Requirement already satisfied: rich>=13.8.0 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from typer>=0.27->fusion-backup==0.1.1) (15.0.0)
+2026-10-18T21:48:14.7499107Z Requirement already satisfied: annotated-doc>=0.0.2 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from typer>=0.27->fusion-backup==0.1.1) (0.0.5)
+2026-10-18T21:48:14.7530902Z Requirement already satisfied: markdown-it-py>=2.2.0 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from rich>=13.8.0->typer>=0.27->fusion-backup==0.1.1) (4.2.0)
+2026-10-18T21:48:14.7538276Z Requirement already satisfied: pygments<3.0.0,>=2.13.0 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from rich>=13.8.0->typer>=0.27->fusion-backup==0.1.1) (2.21.0)
+2026-10-18T21:48:14.7566220Z Requirement already satisfied: mdurl~=0.1 in /opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/site-packages (from markdown-it-py>=2.2.0->rich>=13.8.0->typer>=0.27->fusion-backup==0.1.1) (0.1.2)
+2026-10-18T21:48:14.8107582Z WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+2026-10-18T21:48:15.6384454Z ::group::Run fusion-backup run --repo . --summary-file "$RUNNER_TEMP/summary.txt"
+2026-10-18T21:48:15.6385068Z fusion-backup run --repo . --summary-file "$RUNNER_TEMP/summary.txt"
+2026-10-18T21:48:15.6385255Z shell: bash --noprofile --norc -e -o pipefail {0}
+2026-10-18T21:48:15.6385438Z env:
+2026-10-18T21:48:15.6385555Z   APS_CLIENT_ID: ***
+2026-10-18T21:48:15.6385684Z   APS_CLIENT_SECRET: ***
+2026-10-18T21:48:15.6385821Z   APS_SSA_ID: ***
+2026-10-18T21:48:15.6385968Z   APS_SSA_KEY_ID: ***
+2026-10-18T21:48:15.6386135Z   APS_SSA_PRIVATE_KEY: ***
+2026-10-18T21:48:15.6386350Z ::endgroup::
+2026-10-18T21:48:19.0825949Z Fusion backup 2026-10-18 21:48 UTC
+2026-10-18T21:48:19.0826997Z Cloud items checked: 29, files written: 0, STEPs generated: 0, STEPs pending: 0
+2026-10-18T21:48:19.0827240Z STEP jobs this month (MFG Data Model - standard jobs, counted by fusion-backup): 20
+2026-10-18T21:48:19.8836267Z ::group::Run bash .gitea/scripts/commit-backup.sh "$RUNNER_TEMP/summary.txt"
+2026-10-18T21:48:19.8836830Z bash .gitea/scripts/commit-backup.sh "$RUNNER_TEMP/summary.txt"
+2026-10-18T21:48:19.8837099Z shell: bash --noprofile --norc -e -o pipefail {0}
+2026-10-18T21:48:19.8837383Z ::endgroup::
+2026-10-18T21:48:20.5412149Z Nothing changed, nothing to commit.
+2026-10-18T21:48:21.0155964Z evaluating expression 'success()'
+2026-10-18T21:48:21.0157055Z expression 'success()' evaluated to 'true'
+2026-10-18T21:48:21.0157237Z ⭐ Run Post actions/setup-python@v6
+2026-10-18T21:48:21.0157540Z Writing entry to tarball workflow/outputcmd.txt len:0
+2026-10-18T21:48:21.0157998Z Writing entry to tarball workflow/statecmd.txt len:0
+2026-10-18T21:48:21.0158239Z Writing entry to tarball workflow/pathcmd.txt len:0
+2026-10-18T21:48:21.0158390Z Writing entry to tarball workflow/envs.txt len:0
+2026-10-18T21:48:21.0158531Z Writing entry to tarball workflow/SUMMARY.md len:0
+2026-10-18T21:48:21.0158659Z Extracting content to '/var/run/act'
+2026-10-18T21:48:21.1099420Z run post step for 'actions/setup-python@v6'
+2026-10-18T21:48:21.1100968Z executing remote job container: [node /var/run/act/actions/0bca5aae813b99e4ba4d537615b05d4ed693b584800702db110fd915a7cbdbb5/dist/cache-save/index.js]
+2026-10-18T21:48:21.1116653Z   🐳  docker exec cmd=[node /var/run/act/actions/0bca5aae813b99e4ba4d537615b05d4ed693b584800702db110fd915a7cbdbb5/dist/cache-save/index.js] user= workdir=
+2026-10-18T21:48:21.1117425Z Exec command '[node /var/run/act/actions/0bca5aae813b99e4ba4d537615b05d4ed693b584800702db110fd915a7cbdbb5/dist/cache-save/index.js]'
+2026-10-18T21:48:21.1118232Z Working directory '/workspace/example-org/my-cad-repo'
+2026-10-18T21:48:21.3683326Z   ✅  Success - Post actions/setup-python@v6
+2026-10-18T21:48:21.8076681Z evaluating expression 'always()'
+2026-10-18T21:48:21.8077476Z expression 'always()' evaluated to 'true'
+2026-10-18T21:48:21.8077647Z ⭐ Run Post actions/checkout@v5
+2026-10-18T21:48:21.8078627Z Writing entry to tarball workflow/outputcmd.txt len:0
+2026-10-18T21:48:21.8078838Z Writing entry to tarball workflow/statecmd.txt len:0
+2026-10-18T21:48:21.8078981Z Writing entry to tarball workflow/pathcmd.txt len:0
+2026-10-18T21:48:21.8079176Z Writing entry to tarball workflow/envs.txt len:0
+2026-10-18T21:48:21.8079292Z Writing entry to tarball workflow/SUMMARY.md len:0
+2026-10-18T21:48:21.8079635Z Extracting content to '/var/run/act'
+2026-10-18T21:48:21.9149142Z run post step for 'actions/checkout@v5'
+2026-10-18T21:48:21.9150718Z executing remote job container: [node /var/run/act/actions/4f2b73f02470fcce346e867a2347cf2272d798014969991b71875b2592508807/dist/index.js]
+2026-10-18T21:48:21.9166306Z   🐳  docker exec cmd=[node /var/run/act/actions/4f2b73f02470fcce346e867a2347cf2272d798014969991b71875b2592508807/dist/index.js] user= workdir=
+2026-10-18T21:48:21.9166696Z Exec command '[node /var/run/act/actions/4f2b73f02470fcce346e867a2347cf2272d798014969991b71875b2592508807/dist/index.js]'
+2026-10-18T21:48:21.9167668Z Working directory '/workspace/example-org/my-cad-repo'
+2026-10-18T21:48:22.0950568Z [command]/usr/bin/git version
+2026-10-18T21:48:22.1015345Z git version 2.55.0
+2026-10-18T21:48:22.1049099Z ***
+2026-10-18T21:48:22.1075634Z Temporarily overriding HOME='/tmp/f15f0919-a493-4110-bafe-1f2544666c63' before making global git config changes
+2026-10-18T21:48:22.1076370Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-18T21:48:22.1083750Z [command]/usr/bin/git config --global --add safe.directory /workspace/example-org/my-cad-repo
+2026-10-18T21:48:22.1148540Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-18T21:48:22.1222232Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-18T21:48:22.1765141Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/gitea\.example\.com\/\.extraheader
+2026-10-18T21:48:22.1810673Z http.https://gitea.example.com/.extraheader
+2026-10-18T21:48:22.1825189Z [command]/usr/bin/git config --local --unset-all http.https://gitea.example.com/.extraheader
+2026-10-18T21:48:22.1889437Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/gitea\.example\.com\/\.extraheader' && git config --local --unset-all 'http.https://gitea.example.com/.extraheader' || :"
+2026-10-18T21:48:22.2438682Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-18T21:48:22.2495416Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-18T21:48:22.3216466Z   ✅  Success - Post actions/checkout@v5
+2026-10-18T21:48:22.7164322Z Cleaning up container for job backup
+2026-10-18T21:48:22.9922879Z Removed container: 700263b6be9aa58e249f696f486dd06b4d650ae1edc41fbe5deda27d18cd921d
+2026-10-18T21:48:22.9943157Z   🐳  docker volume rm GITEA-ACTIONS-TASK-4-WORKFLOW-Fusion-backup-JOB-backup-f5d80660331098c91bc129da25ab316e40dc4830b5661d5469b9dab549038e94
+2026-10-18T21:48:23.0903240Z   🐳  docker volume rm GITEA-ACTIONS-TASK-4-WORKFLOW-Fusion-backup-JOB-backup-f5d80660331098c91bc129da25ab316e40dc4830b5661d5469b9dab549038e94-env
+2026-10-18T21:48:23.2780669Z 🏁  Job succeeded

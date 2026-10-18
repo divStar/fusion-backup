@@ -19,17 +19,14 @@ Each run lists the files of a Fusion project and, for every item it should back 
 2. **Generates a STEP in the cloud** only when the `.f3d` it would belong to differs from the one the existing STEP was made from. If generation fails, the new `.f3d` is still written and the STEP stays pending; later runs retry it.
 3. **Records its state** in `.fusion-backup-state.json` in the target (item IDs, versions, hashes, STEP jobs per month). Keep it next to the files, e.g. commit it with them.
 
-Files you uploaded to Fusion yourself (STEP, DWG, PDF, ...) are downloaded as they are.
+Files you uploaded to Fusion yourself (STEP, DWG, PDF, ...) are downloaded as they are. The rules behind these steps are explained, with diagrams, in [docs/architecture.md](docs/architecture.md).
 
 > [!CAUTION]
 > STEP exports are made by the APS Manufacturing Data Model API, which Autodesk runs in two versions:
 > * **v2 is used by default**, because its exports are not metered at the time of writing. Autodesk has announced that v2 will be retired, without a date yet.
 > * **v3 is implemented as well** (`--mfg-api v3` or `FUSION_BACKUP_MFG_API=v3`), but its exports are metered and may cost money once your plan's allowance is used up. Check Autodesk's current pricing before switching.
 >
-> Both give the same STEP: Autodesk keeps one export per design version, and v2 and v3 return the same file for it. The tool counts the export jobs it starts and prints the monthly total after each run. Set `--step-limit` to stop at your own monthly limit, or `--no-step` to skip STEPs entirely.
-
-> [!NOTE]
-> Autodesk's usage numbers can't be read by the robot: the APS Application Management API rejects Secure Service Accounts ("Auto-provisioning is only available for Autodesk employees"), although its documentation says otherwise. Watch your usage in the APS portal (developer hub → Hub analytics → API usage) and rely on Autodesk's notification emails.
+> Both give the same STEP: Autodesk keeps one export per design version, and v2 and v3 return the same file for it. The tool counts the export jobs it starts and prints the monthly total after each run, because Autodesk's own usage numbers [can't be read by the robot](docs/authentication.md#limitations). Set `--step-limit` to stop at your own monthly limit, or `--no-step` to skip STEPs entirely.
 
 ## Install
 
@@ -45,36 +42,9 @@ The machine or CI runner needs outgoing HTTPS access to Autodesk: `developer.api
 
 ## Set up the robot
 
-fusion-backup authenticates as a **Secure Service Account (SSA)**: a robot user that belongs to an APS app and proves its identity with a private key. Setting it up takes a few minutes, all in the browser:
+fusion-backup authenticates as a **Secure Service Account (SSA)**: a robot user that belongs to an APS app and proves its identity with a private key. Setting it up takes a few minutes in the browser: an APS app of type Server-to-Server, a robot with a key, an invitation of the robot into your Fusion hub with at least Reader access to the project, and five environment variables with its credentials.
 
-1. **APS app:** create a free APS developer hub and in it an application of type **Server-to-Server**; note its client ID and secret.
-2. **Robot:** create a service account and a key for it, e.g. with Autodesk's [SSA Manager](https://ssa-manager.autodesk.io/) (sign in with the app's client ID and secret). It shows the robot's **email address**, **service account ID**, **key ID** and **private key**; the key is shown only once.
-3. **Fusion hub:** on your hub's admin page, `https://<your-hub>.autodesk360.com/g/admin/manage/hub`, invite the robot's email as a **member**; it shows as active right away.
-4. **Project:** in the project's **Members and Permissions**, give the robot at least **Reader** on the project or the folders to back up.
-
-Step-by-step instructions, the reasons behind them and how to keep the key safe are in **[docs/authentication.md](docs/authentication.md)**.
-
-Then provide the credentials as environment variables (in CI: as secrets):
-
-| Variable | Value |
-|---|---|
-| `APS_CLIENT_ID`, `APS_CLIENT_SECRET` | the Server-to-Server app |
-| `APS_SSA_ID`, `APS_SSA_KEY_ID` | the robot's service account ID and key ID |
-| `APS_SSA_PRIVATE_KEY` or `APS_SSA_PRIVATE_KEY_FILE` | the robot's private key (PEM text), or the path of a file containing it |
-
-For example, locally with the key in a file only you can read:
-
-```bash
-export APS_CLIENT_ID="<client ID>"
-export APS_CLIENT_SECRET="<client secret>"
-export APS_SSA_ID="<service account ID>"
-export APS_SSA_KEY_ID="<key ID>"
-export APS_SSA_PRIVATE_KEY_FILE="$HOME/.config/fusion-backup/robot.pem"
-
-fusion-backup check          # logs in as the robot and lists the projects it can see
-```
-
-In CI, pass the same variables from the CI system's secrets, as in the [CI example](#ci-example-gitea-actions) below.
+**[docs/authentication.md](docs/authentication.md)** has the step-by-step setup, the variables, the reasons behind this login and how to keep the key safe.
 
 ## Run
 
@@ -144,6 +114,16 @@ Paths must stay inside the repository and may not point into `.git` or at the to
 
 Several repositories can share one project: pass `--repo` once per repository. An item mapped into two repositories is downloaded and exported once; it is reported as unmapped only if no repository maps, mirrors or ignores it.
 
+> [!TIP]
+> STEP files usually have Windows line endings (CRLF), and git converts them to LF on machines with `core.autocrlf` set. The backed-up files then no longer match their recorded hashes, and the next run rewrites all of them. A `.gitattributes` in the repository keeps them byte for byte:
+>
+> ```gitattributes
+> *.step -text
+> *.STEP -text
+> *.stp -text
+> *.STP -text
+> ```
+
 ## Commands
 
 | Command | What it does |
@@ -166,49 +146,16 @@ Options of `run` (`--item` and `--step-limit` also apply to `status`):
 
 `-v` logs every item. `fusion-backup --help` and `fusion-backup <command> --help` show all options. `run` exits with 1 if any item failed; pending STEPs alone are not a failure.
 
-## CI example (Gitea Actions)
-
-The workflow below lives in the repository that contains `.fusion-backup.json`, with the robot's credentials stored as Actions secrets. It works the same way in GitHub Actions and, with GitLab's syntax, in GitLab CI.
-
-```yaml
-on:
-  schedule: [{ cron: "0 3 */3 * *" }]
-  workflow_dispatch:
-
-jobs:
-  backup:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-python@v6
-        with: { python-version: "3.14" }
-      - run: pip install "git+https://github.com/divStar/fusion-backup"
-      - run: fusion-backup run --repo . --summary-file /tmp/summary.txt
-        env:
-          APS_CLIENT_ID: ${{ secrets.APS_CLIENT_ID }}
-          APS_CLIENT_SECRET: ${{ secrets.APS_CLIENT_SECRET }}
-          APS_SSA_ID: ${{ secrets.APS_SSA_ID }}
-          APS_SSA_KEY_ID: ${{ secrets.APS_SSA_KEY_ID }}
-          APS_SSA_PRIVATE_KEY: ${{ secrets.APS_SSA_PRIVATE_KEY }}
-          # FUSION_BACKUP_MFG_API: v3   # STEP exports through v3 instead of v2
-      - run: |
-          git add -A
-          git diff --cached --quiet || {
-            { echo "chore(cad): Fusion backup"; echo; cat /tmp/summary.txt; } > /tmp/message.txt
-            git -c user.name=fusion-backup -c user.email=fusion-backup@localhost commit -F /tmp/message.txt
-            git push
-          }
-```
-
 ## Documentation
 
 * **[docs/authentication.md](docs/authentication.md)**: setting up the robot step by step, and how to keep its key safe.
 * **[docs/architecture.md](docs/architecture.md)**: how fusion-backup works inside, with diagrams: its parts and types, a run, the download and STEP rules, the two Manufacturing Data Model API versions, the robot login and the reasons behind these choices.
 * **[docs/development.md](docs/development.md)**: setting up a development environment, the checks every build runs, the code layout and the tests.
+* **[examples/gitea/](examples/gitea/README.md)**: a complete, working setup for Gitea Actions (and, with one path changed, GitHub Actions): the workflow, the small commit script it uses, the secrets to add, notes for self-hosted runners, and the log of real runs, so you know what to expect.
 
 ## Project status and contributions
 
-This project was created with [Claude Opus 5.5](https://www.anthropic.com/claude) (Anthropic). It is tested by me and runs in my own homelab for my own purposes. I fix what I run into myself; beyond that, I can't promise further development.
+I designed fusion-backup, decided on its architecture and reviewed its code and documentation; the code itself was written by [Claude Opus 5.5](https://www.anthropic.com/claude) (Anthropic). It is tested by me and runs in my own homelab for my own purposes, so your mileage may vary. I fix what I run into myself; beyond that, I can't promise further development.
 
 Pull requests are welcome if they fix a problem and don't introduce breaking changes: the configuration and state files, the paths and the contents of backed-up files (and with them their hashes) must stay compatible, so existing backups keep working without being rewritten.
 

@@ -1,0 +1,47 @@
+# Backs up this repository's Fusion designs from the Autodesk cloud (see .fusion-backup.json) and commits
+# whatever changed, with the run report as the commit message. Uses the latest fusion-backup from GitHub.
+# Goes into .gitea/workflows/ (Gitea) or .github/workflows/ (GitHub) of the repository being backed up.
+name: Fusion backup
+
+on:
+  schedule:
+    - cron: "0 3 */3 * *"   # every 3 days at 03:00
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      - name: Install fusion-backup (latest master)
+        run: pip install "git+https://github.com/divStar/fusion-backup"
+
+      # A failing item doesn't stop the job: what did work is still committed below, and the job fails at the end.
+      - name: Back up
+        id: backup
+        continue-on-error: true
+        env:
+          APS_CLIENT_ID: ${{ secrets.APS_CLIENT_ID }}
+          APS_CLIENT_SECRET: ${{ secrets.APS_CLIENT_SECRET }}
+          APS_SSA_ID: ${{ secrets.APS_SSA_ID }}
+          APS_SSA_KEY_ID: ${{ secrets.APS_SSA_KEY_ID }}
+          APS_SSA_PRIVATE_KEY: ${{ secrets.APS_SSA_PRIVATE_KEY }}
+          # FUSION_BACKUP_MFG_API: v3   # STEP exports through v3 instead of v2 (metered, see the main README)
+        run: fusion-backup run --repo . --summary-file "$RUNNER_TEMP/summary.txt"
+
+      - name: Commit and push changes
+        run: bash .gitea/scripts/commit-backup.sh "$RUNNER_TEMP/summary.txt"
+
+      - name: Fail if items could not be backed up
+        if: steps.backup.outcome == 'failure'
+        run: |
+          echo "Some items could not be backed up; see the 'Back up' step."
+          exit 1

@@ -58,6 +58,16 @@ Reader is enough to list projects, download files and generate STEP exports, thr
 | `APS_SSA_PRIVATE_KEY` | the private key as PEM text (typical for CI secrets) |
 | `APS_SSA_PRIVATE_KEY_FILE` | alternatively, the path of a file containing the PEM (typical for local use) |
 
+Exactly one of the two key variables is needed; if both are set, `APS_SSA_PRIVATE_KEY` is used and the file is ignored. In CI, pass all of them from the CI system's secrets, as in the [Gitea example](../examples/gitea/README.md). Locally, for example with the key in a file only you can read:
+
+```bash
+export APS_CLIENT_ID="<client ID>"
+export APS_CLIENT_SECRET="<client secret>"
+export APS_SSA_ID="<service account ID>"
+export APS_SSA_KEY_ID="<key ID>"
+export APS_SSA_PRIVATE_KEY_FILE="$HOME/.config/fusion-backup/robot.pem"
+```
+
 Then test the setup:
 
 ```bash
@@ -85,5 +95,5 @@ Pre-signed download URLs carry their own credentials; fusion-backup sends them n
 
 ## Limitations
 
-* **No usage numbers:** the APS Application Management API (`/applications/v2/.../usage/daily-totals`) answers robot tokens with `401 "Auto-provisioning is only available for Autodesk employees"`, although its documentation says SSA tokens are accepted. Usage is visible in the APS portal (developer hub → Hub analytics → API usage), and Autodesk notifies you when you approach your plan's limits.
-* **Network:** the runner must reach `developer.api.autodesk.com` and the pre-signed download hosts (Amazon S3, Autodesk's CDN) over HTTPS.
+> [!NOTE]
+> Autodesk's **usage numbers can't be read by the robot**: the APS Application Management API (`/applications/v2/.../usage/daily-totals`) answers robot tokens with `401 "Auto-provisioning is only available for Autodesk employees"`, although its documentation says Secure Service Accounts are accepted. Watch your usage in the APS portal (developer hub → Hub analytics → API usage) and rely on Autodesk's notification emails, which arrive when you approach your plan's limits.
