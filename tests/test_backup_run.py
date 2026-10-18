@@ -303,6 +303,16 @@ def test_plain_files_unmapped_and_ignored_items(tmp_path: Path) -> None:
     assert "Unmapped cloud items" in summary.render()
 
 
+def test_ignore_everything_but_the_explicit_mappings(tmp_path: Path) -> None:
+    cloud = FakeCloud()
+    cloud.put("Board", 1, b"b")
+    cloud.put("Bracket", 1, b"c")
+    root = make_target(tmp_path / "repo", {"Board": {"f3d": "board.f3d"}}, ignore=["*"])
+    summary = run(cloud, root)
+    assert cloud.downloads == ["Board"] and (root / "board.f3d").read_bytes() == b"b"
+    assert summary.unmapped == []
+
+
 def test_item_mapped_in_two_targets_is_fetched_once(tmp_path: Path, cloud: FakeCloud) -> None:
     first = make_target(tmp_path / "one", {"Bracket": {"f3d": "Bracket.f3d", "step": "Bracket.step"}})
     second = make_target(tmp_path / "two", {"Bracket": {"f3d": "x/Bracket.f3d", "step": "x/Bracket.step"}})

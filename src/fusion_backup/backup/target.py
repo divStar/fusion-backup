@@ -1,6 +1,7 @@
 """A target directory (typically a git repository) with its configuration and state."""
 
 import json
+from fnmatch import fnmatchcase
 from pathlib import Path
 
 from pydantic import ValidationError
@@ -56,12 +57,14 @@ class BackupTarget:
         """The explicit mapping, else the mirror default; None for ignored or unmapped items."""
         if item_path in self.config.items:
             return self.config.items[item_path]
-        if item_path in self.config.ignore or self.config.mirror is None:
+        if self.ignores(item_path) or self.config.mirror is None:
             return None
         return self.config.mirror.mapping_for(item_path, is_design)
 
     def ignores(self, item_path: str) -> bool:
-        return item_path in self.config.ignore
+        """Whether an `ignore` entry names the item, exactly or as a wildcard pattern. The exact comparison keeps names
+        containing `[` working, which a pattern would read as a character class."""
+        return any(item_path == entry or fnmatchcase(item_path, entry) for entry in self.config.ignore)
 
     def path(self, relative: str) -> Path:
         """Resolve a configured path and make sure it stays inside the target."""

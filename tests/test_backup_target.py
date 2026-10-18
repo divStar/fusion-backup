@@ -32,6 +32,25 @@ def test_loads_mappings_ignore_and_mirror(tmp_path: Path) -> None:
     assert plain is not None and plain.file == "cloud/e.pdf"
 
 
+def test_ignore_takes_wildcards_and_exact_names(tmp_path: Path) -> None:
+    target = BackupTarget.load(write_config(tmp_path, {}, ignore=["Imported * STEP", "Part [v2]"]))
+    assert target.ignores("Imported display STEP") and not target.ignores("Imported display")
+    assert target.ignores("Part [v2]")  # an exact name counts, although [v2] alone would be a character class
+
+
+def test_explicit_mapping_wins_over_an_ignore_pattern(tmp_path: Path) -> None:
+    target = BackupTarget.load(write_config(tmp_path, {"Board": {"f3d": "board.f3d"}}, ignore=["*"]))
+    assert target.mapping_for("Board", True) == target.config.items["Board"]
+    assert target.mapping_for("Bracket", True) is None and target.ignores("Bracket")
+
+    cloud = FakeCloud()
+    cloud.put("Board", 1, b"b")
+    cloud.put("Bracket", 1, b"c")
+    lines = status_lines(cloud, [target], now=lambda: datetime(2026, 10, 15, tzinfo=UTC))
+    assert lines[1].split()[1] == "Board" and lines[1].endswith(f"{target.name}: nothing yet")
+    assert lines[2].split()[1] == "Bracket" and lines[2].endswith(f"{target.name}: ignored")
+
+
 def test_without_mirror_unlisted_items_are_unmapped(tmp_path: Path) -> None:
     assert BackupTarget.load(write_config(tmp_path, {})).mapping_for("X", True) is None
 

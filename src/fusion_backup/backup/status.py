@@ -37,11 +37,9 @@ def status_lines(
 
 
 def _describe(target: BackupTarget, item: CloudItem) -> str:
-    if target.ignores(item.path):
-        return f"{target.name}: ignored"
-    mapping = target.mapping_for(item.path, item.is_design)
+    mapping = target.mapping_for(item.path, item.is_design)  # an explicit mapping wins over a matching ignore pattern
     if mapping is None:
-        return ""
+        return f"{target.name}: ignored" if target.ignores(item.path) else ""
     entry = target.state.items.get(item.path)
     if entry is None or entry.version is None:
         return f"{target.name}: nothing yet" + (", STEP pending" if mapping.step else "")
